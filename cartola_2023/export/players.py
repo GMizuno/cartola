@@ -3,9 +3,9 @@ from datetime import date
 import pendulum
 
 from cartola_project import Players, GCSStorage, JsonWriter, ParquetWriter
-from cartola_2023.constant import StorageFolder, Bucket, ProjectId
+from cartola_2023.constant import StorageFolder, Bucket, ProjectId, BUCKET
 from cartola_project.transformations import PlayerTransformer
-from cartola_2023.util import filter_by_date
+from cartola_2023.export.util import filter_by_date
 
 
 def export_player_bronze(api_host_key: str,
@@ -24,7 +24,7 @@ def export_player_bronze(api_host_key: str,
     data = partidas.get_data(match_id=matches_id)
 
     file_name = f"{StorageFolder.PLAYERS}/{Bucket.BRONZE}/league={league_id}/season={season_year}/{date}.json"
-    JsonWriter(gcs, "teste_cartola_gabriel", file_name, data).write()
+    JsonWriter(gcs, BUCKET, file_name, data).write()
 
     return data
 
@@ -38,4 +38,4 @@ def export_player_silver(
     date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
     file_name = f"{StorageFolder.PLAYERS}/{Bucket.SILVER}/league={league_id}/season={season_year}/{date}.parquet"
     print(file_name)
-    ParquetWriter(gcs, "teste_cartola_gabriel", file_name, data).write()
+    ParquetWriter(gcs, BUCKET, file_name, data).write()

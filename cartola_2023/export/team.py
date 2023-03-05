@@ -1,9 +1,9 @@
 import pendulum
 
 from cartola_project import GCSStorage, Teams, JsonWriter, ParquetWriter
-from cartola_2023.constant import StorageFolder, Bucket, ProjectId
+from cartola_2023.constant import StorageFolder, Bucket, ProjectId, BUCKET
 from cartola_project.transformations import TeamsTransformer
-from cartola_2023.util import get_all_ids
+from cartola_2023.export.util import get_all_ids
 
 
 def export_team_bronze(api_host_key: str,
@@ -18,7 +18,7 @@ def export_team_bronze(api_host_key: str,
 
     date = pendulum.now().strftime('%Y-%d-%m_%H:%M:%S')
     file_name = f'{StorageFolder.TEAMS}/{Bucket.BRONZE}/league={league_id}/season={season_year}/{date}.json'
-    JsonWriter(gcs, 'teste_cartola_gabriel', file_name, data).write()
+    JsonWriter(gcs, BUCKET, file_name, data).write()
 
     return data
 
@@ -30,4 +30,4 @@ def export_team_silver(file: dict | list[dict], league_id: str,
     gcs = GCSStorage('cartola.json', 'cartola-360814')
     date = pendulum.now().strftime('%Y-%d-%m_%H:%M:%S')
     file_name = f'{StorageFolder.TEAMS}/{Bucket.SILVER}/league={league_id}/season={season_year}/{date}.parquet'
-    ParquetWriter(gcs, 'teste_cartola_gabriel', file_name, data).write()
+    ParquetWriter(gcs, BUCKET, file_name, data).write()

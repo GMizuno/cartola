@@ -1,10 +1,9 @@
 from datetime import date
 
 import pandas as pd
-from pandas import DataFrame
-
 from cartola_project import ParquetReader
 from cartola_project.connector import CloudStorage
+from pandas import DataFrame
 
 
 def win_home(data: DataFrame):
@@ -40,7 +39,6 @@ def get_all_ids(cloudstorage: CloudStorage, league_id: str,
     )
 
 
-# TODO: Remover Dask dessa funcao
 def filter_by_date(
         cloudstorage: CloudStorage,
         league_id: str,
