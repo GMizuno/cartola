@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "cartola-2023"
+version = "0.1.0"
+description = ""
+authors = ["Gabriel Mizuno <gabrielmizuno@gmail.com>"]
+readme = "README.md"
+packages = [{include = "cartola_2023"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+cartola-project = {git = "git@github.com:GMizuno/cartola_project.git"}
+python-decouple = "^3.8"
+pendulum = "^2.1.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

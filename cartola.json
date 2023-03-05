@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "cartola-360814",
+  "private_key_id": "2e59afd7eb3f8d6ce35df22ca08a1bd4914a00db",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDyrPV+uuiVRGT3\nAjP4hKzrJW+B2UyT1aiojh+Xun0wK+v1wxj0Ee77EnbPxhIDAoZut5+UCIbDX3EK\nkhPAxhAnFEqT8Z6+f0yEzXjMM+9/Y2CZkSpfLVzbSbJb9GdIK1r/8MJYw15JoOYx\nqP8WXHUv6KaEisExalUKhbYKQIj6NHYwHFs89779TbIlVWnZtBIGvC/p9j0sj7wV\nmUWmiH96K84szp0er0n/5rj3NjhSf2464pI5axdY3RmmxHpgDMJCLPxQWKbkHe8y\n1MqDP6Baze2zDg/S79pOZbxEvtcZwyTcE/DtAWyjAr6lYxMiFNPCwQuKJleGTAfT\n/iTAVFTXAgMBAAECggEASqyTPGR6Zlgt814/rMTyysbxuZSqvkD8TaWyLgfKNvUE\n/lKDDrOoBKVJXyUVbMytnksttSksgtkPGVAa+PJZjRTu3/h1Pyw/2Qu7FKcUlu/3\nDTpAvhng3W+fjTE3SNtifKhSvWqczG5Q904H9JMN0mi2OMnTqgeM1JiRjDUQkWDS\n6iKR46D4C8ZI63ltahpQT4bN/cXnyjMlFjtSw/weuWSGEk8Kcm7CaXbBpdGMxBFi\nwtCIHZTexa75BABOIUMskVnNt70lyugKXt3+DNvRInlTvGejaM/fPmsMzMCdfs9A\nYNGWmla0/gMsxCrgiPGtKH74PBVjEq4T1C98x2PopQKBgQD5RXq8gOTSmDK5GgiL\n2lEGhmXKVCmFm2sgXnueWyDCYRIc1/dbQnHKUPKqe6jRHHdgOX4mKjgDGh05QdXa\nWxJK6Qzkko0I6o7DmqOwChS9jVaApuD7kv+W+ZbjlyE+WGl0BtlLt8sGyPaaWFJe\nmTHgmDIyIOvewj3u0+7f3ho5JQKBgQD5Oea1Zdl8Wg6eaOW9bHDewYCXrqtOCAnw\nsVDPx3fgeHnaRdDRaHPlWXE4nTcWSiTIvIC5mEeBj8L1b3h/FUsGyYxCmmyjRicN\n51YW4FlAhWUeO2AK9Uk3vnjGsV4sOESCBZApYC3H0t9+Cgf0zU5krtmpCeYcEjFr\nY64/MR0LSwKBgALTddPDRlTY4uJUWDp1rCt9xJOppprcKze/unkOIW3yucjX7fb7\n5txbVJT4N+6++t99Z1+5ZM8sMZ6fj3QdSjTNNZc1ziGGvz2aeDabtqZ7frqQqcZQ\nYVNt2vcTlI3nZLKrDTWdjNCz4I/ZZn2qEPWx5AfLdcEdxKP7hR7Gntd9AoGAUZMV\nI6y5mg00Gb+F6xFyhEbb20oNwhW5gzHWnJvSbgOhBsOxTMmenaQ//eLfpAkSry2c\nCKOCTDMNAh7BVv9WNluD8EzxYCPXJqLgt84pCIhhB5sxnYSZuYg7qfVmOJ0WN2Sw\nwgo8EdrA0lVgM0176lKc5cpaqjd+O4M+BmsB8a8CgYEA2w4bmx8BLCN0dZLTf1ZZ\n3oUEoBO7zn0YL5Eav5W6acfTe47cBLGlzi0W6PjC10CW1XckIeuvRSyuU7/J1ENy\nX+hnWVsu45LxusaXsWmHCXDVkU112ciuyiBEdp9QmGSzwXe/ll2qrBSQOABZoVBO\nOGRYXtmAtqWbBZ5QDw913eI=\n-----END PRIVATE KEY-----\n",
+  "client_email": "bucket-cartola@cartola-360814.iam.gserviceaccount.com",
+  "client_id": "117470079924679128495",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bucket-cartola%40cartola-360814.iam.gserviceaccount.com"
+}
