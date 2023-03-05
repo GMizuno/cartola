@@ -1,7 +1,7 @@
 import pendulum
 
 from cartola_project import GCSStorage, Teams, JsonWriter, ParquetWriter
-from cartola_2023.constant import StorageFolder, Bucket
+from cartola_2023.constant import StorageFolder, Bucket, ProjectId
 from cartola_project.transformations import TeamsTransformer
 from cartola_2023.util import get_all_ids
 
@@ -10,7 +10,7 @@ def export_team_bronze(api_host_key: str,
                        api_secert_key: str,
                        league_id: str,
                        season_year: str) -> list[dict]:
-    gcs = GCSStorage('cartola.json', 'cartola-360814')
+    gcs = GCSStorage('cartola.json', ProjectId.GCP_PROD)
     times = Teams(api_host_key, api_secert_key)
 
     ids = get_all_ids(gcs, league_id, season_year)

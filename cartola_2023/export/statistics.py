@@ -3,7 +3,7 @@ from datetime import date
 import pendulum
 
 from cartola_project import Matches, GCSStorage, JsonWriter, ParquetWriter
-from cartola_2023.constant import StorageFolder, Bucket
+from cartola_2023.constant import StorageFolder, Bucket, ProjectId
 from cartola_project.transformations import MatchTransformer
 from cartola_2023.util import filter_by_date
 
@@ -16,7 +16,7 @@ def export_statistics_bronze(api_host_key: str,
                              date_to: date,
                              ) -> list:
     statistics = Matches(api_host_key, api_secert_key)
-    gcs = GCSStorage('cartola.json', 'cartola-360814')
+    gcs = GCSStorage('cartola.json', ProjectId.GCP_PROD)
 
     matches_id = filter_by_date(gcs, league_id, season_year, date_from, date_to)
     data = statistics.get_data(match_id=matches_id)

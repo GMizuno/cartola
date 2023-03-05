@@ -62,7 +62,7 @@ def filter_by_date(
     return result
 
 
-def create_obt_matches(cloudstorage: CloudStorage) -> None:
+def create_obt_matches(cloudstorage: CloudStorage) -> pd.DataFrame:
     dataframe1 = ParquetReader(
         cloudstorage, f"teste_cartola_gabriel", f"matches/silver/"
     ).read_all_files()
@@ -88,7 +88,7 @@ def create_obt_matches(cloudstorage: CloudStorage) -> None:
     return result.drop_duplicates()
 
 
-def create_obt_players(cloudstorage: CloudStorage) -> None:
+def create_obt_players(cloudstorage: CloudStorage) -> pd.DataFrame:
     dataframe1 = ParquetReader(
         cloudstorage, f"teste_cartola_gabriel", f"players/silver/"
     ).read_all_files()

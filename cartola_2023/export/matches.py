@@ -1,7 +1,7 @@
 import pendulum
 
 from cartola_project import Fixtures, GCSStorage, JsonWriter, ParquetWriter
-from cartola_2023.constant import StorageFolder, Bucket
+from cartola_2023.constant import StorageFolder, Bucket, ProjectId
 from cartola_project.transformations import FixturesTransformer
 
 
@@ -12,7 +12,7 @@ def export_matches_bronze(api_host_key: str,
     partidas = Fixtures(api_host_key, api_secert_key)
     data = partidas.get_data(league_id=league_id, season_year=season_year)
 
-    gcs = GCSStorage('cartola.json', 'cartola-360814')
+    gcs = GCSStorage('cartola.json', ProjectId.GCP_PROD)
     date = pendulum.now().strftime('%Y-%d-%m_%H:%M:%S')
     file_name = f'{StorageFolder.MATCHES}/{Bucket.BRONZE}/league={league_id}/season={season_year}/{date}.json'
     JsonWriter(gcs, 'teste_cartola_gabriel', file_name, data).write()
