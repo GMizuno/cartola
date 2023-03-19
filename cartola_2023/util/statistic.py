@@ -6,7 +6,12 @@ from cartola_2023.util.util import config_with_date
 
 # TODO: Mover essa parte,
 params = [
-    config_with_date('71', '2022', date(2022, 10, 1), date(2022, 10, 12)),
+    config_with_date(
+        league_id='71',
+        season_year='2022',
+        date_from=date(2022, 4, 10),
+        date_to=date(2022, 11, 13),
+    ),
 ]
 for param in params:
     result = export_statistics_bronze(**param)

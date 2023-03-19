@@ -20,7 +20,7 @@ def export_player_bronze(api_host_key: str,
     date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
 
     matches_id = filter_by_date(gcs, league_id, season_year, date_from,
-                                date_to)[0:3]
+                                date_to)
     data = partidas.get_data(match_id=matches_id)
 
     file_name = f"{StorageFolder.PLAYERS}/{Bucket.BRONZE}/league={league_id}/season={season_year}/{date}.json"
