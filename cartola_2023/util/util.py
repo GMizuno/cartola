@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 
 from decouple import config
 
@@ -17,8 +18,8 @@ def config_without_date(league_id: str,
 
 def config_with_date(league_id: str,
                      season_year: str,
-                     date_from: date,
-                     date_to: date,
+                     date_from: Optional[date],
+                     date_to: Optional[date],
                      api_host_key: str = 'API_HOST_KEY',
                      api_secert_key: str = 'API_SECERT_KEY',
                      ) -> dict:

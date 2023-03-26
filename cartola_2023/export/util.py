@@ -5,6 +5,8 @@ from cartola_project import ParquetReader
 from cartola_project.connector import CloudStorage
 from pandas import DataFrame
 
+from cartola_2023.constant import Bucket
+
 
 def win_home(data: DataFrame):
     if data.goals_home == data.goals_away:
@@ -28,7 +30,7 @@ def get_all_ids(cloudstorage: CloudStorage, league_id: str,
                 season_year: str) -> list:
     d = ParquetReader(
         cloudstorage,
-        f"teste_cartola_gabriel",
+        Bucket.MAIN,
         f"matches/silver/league={league_id}/season={season_year}/",
     ).read_all_files()
     return list(
@@ -48,7 +50,7 @@ def filter_by_date(
 ):
     dataframe = ParquetReader(
         cloudstorage,
-        f"teste_cartola_gabriel",
+        Bucket.MAIN,
         f"matches/silver/league={league_id}/season={season_year}/",
     ).read_all_files()
 
@@ -62,15 +64,21 @@ def filter_by_date(
 
 def create_obt_matches(cloudstorage: CloudStorage) -> pd.DataFrame:
     dataframe1 = ParquetReader(
-        cloudstorage, f"teste_cartola_gabriel", f"matches/silver/"
+        cloudstorage,
+        "teste_cartola_gabriel",
+        "matches/silver/"
     ).read_all_files()
 
     dataframe2 = ParquetReader(
-        cloudstorage, f"teste_cartola_gabriel", f"statistics/silver/"
+        cloudstorage,
+        "teste_cartola_gabriel",
+        "statistics/silver/"
     ).read_all_files()
 
     dataframe3 = ParquetReader(
-        cloudstorage, f"teste_cartola_gabriel", f"teams/silver/"
+        cloudstorage,
+        "teste_cartola_gabriel",
+        "teams/silver/"
     ).read_all_files()
 
     dataframe3 = dataframe3.astype({"team_id": "int64"})
@@ -88,11 +96,13 @@ def create_obt_matches(cloudstorage: CloudStorage) -> pd.DataFrame:
 
 def create_obt_players(cloudstorage: CloudStorage) -> pd.DataFrame:
     dataframe1 = ParquetReader(
-        cloudstorage, f"teste_cartola_gabriel", f"players/silver/"
+        cloudstorage,
+        "teste_cartola_gabriel",
+        "players/silver/"
     ).read_all_files()
 
     dataframe2 = ParquetReader(
-        cloudstorage, f"teste_cartola_gabriel", f"matches/silver/"
+        cloudstorage, Bucket.MAIN, f"matches/silver/"
     ).read_all_files()
 
     dataframe2 = dataframe2.astype({"match_id": "int64"})

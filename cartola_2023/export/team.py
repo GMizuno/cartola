@@ -27,7 +27,7 @@ def export_team_silver(file: dict | list[dict], league_id: str,
                        season_year: str) -> None:
     data = TeamsTransformer(file)._get_transformation()
 
-    gcs = GCSStorage('cartola.json', 'cartola-360814')
+    gcs = GCSStorage('cartola.json', ProjectId.GCP_PROD)
     date = pendulum.now().strftime('%Y-%d-%m_%H:%M:%S')
     file_name = f'{StorageFolder.TEAMS}/{Bucket.SILVER}/league={league_id}/season={season_year}/{date}.parquet'
     ParquetWriter(gcs, BUCKET, file_name, data).write()
