@@ -65,31 +65,30 @@ def filter_by_date(
 def create_obt_matches(cloudstorage: CloudStorage) -> pd.DataFrame:
     dataframe1 = ParquetReader(
         cloudstorage,
-        "teste_cartola_gabriel",
+        Bucket.MAIN,
         "matches/silver/"
     ).read_all_files()
 
     dataframe2 = ParquetReader(
         cloudstorage,
-        "teste_cartola_gabriel",
+        Bucket.MAIN,
         "statistics/silver/"
     ).read_all_files()
 
     dataframe3 = ParquetReader(
         cloudstorage,
-        "teste_cartola_gabriel",
+        Bucket.MAIN,
         "teams/silver/"
     ).read_all_files()
 
+    dataframe2 = dataframe2.astype({"fixture": "int64"})
     dataframe3 = dataframe3.astype({"team_id": "int64"})
 
-    result = dataframe1.merge(dataframe2, how="inner", on=["match_id"])
+    result = dataframe1.merge(dataframe2, how="inner", right_on="fixture",
+                              left_on="match_id")
     result = result.merge(dataframe3, how="inner", on=["team_id"])
 
     result = result.assign(home=result.id_team_home == result.team_id)
-    result["win_home"] = result.apply(win_home, axis=1)
-    result["win"] = result.apply(win, axis=1)
-    result = result.drop(columns="win_home")
 
     return result.drop_duplicates()
 
@@ -97,17 +96,20 @@ def create_obt_matches(cloudstorage: CloudStorage) -> pd.DataFrame:
 def create_obt_players(cloudstorage: CloudStorage) -> pd.DataFrame:
     dataframe1 = ParquetReader(
         cloudstorage,
-        "teste_cartola_gabriel",
+        Bucket.MAIN,
         "players/silver/"
     ).read_all_files()
 
     dataframe2 = ParquetReader(
-        cloudstorage, Bucket.MAIN, f"matches/silver/"
+        cloudstorage,
+        Bucket.MAIN,
+        f"matches/silver/"
     ).read_all_files()
 
+    dataframe1 = dataframe1.astype({"fixture": "int64"})
     dataframe2 = dataframe2.astype({"match_id": "int64"})
-    dataframe1 = dataframe1.astype({"match_id": "int64"})
 
-    result = dataframe1.merge(dataframe2, how="inner", on=["match_id"])
+    result = dataframe1.merge(dataframe2, how="inner", right_on="match_id",
+                              left_on="fixture")
 
     return result.drop_duplicates()

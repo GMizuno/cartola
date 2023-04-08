@@ -12,6 +12,8 @@ params = [
     config_with_date(
         league_id='71',
         season_year='2022',
+        date_from=date(2022, 4, 10),
+        date_to=date(2022, 11, 13),
     ),
 ]
 
@@ -24,12 +26,9 @@ match_id = filter_by_date(
     date_to=date(2022, 11, 13),
 )
 
-# match_id[:100]
-# match_id[100:200]
-# match_id[200:300]
-# match_id[300:]
-
+x = 60
+matches_id = match_id[x:(x + 20)]
 
 for param in params:
-    result = export_player_bronze(**param, matches_id=match_id[:100])
+    result = export_player_bronze(**param, matches_id=matches_id)
     export_player_silver(result, param['league_id'], param['season_year'])

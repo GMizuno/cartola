@@ -37,9 +37,10 @@ def export_player_bronze(api_host_key: str,
 
 
 def export_player_silver(
-        file: dict | list[dict], league_id: str, season_year: str
-) -> None:
+        file: dict | list[dict], league_id: str, season_year: str) -> None:
     data = PlayerTransformer(file)._get_transformation()
+    data = data.astype(str) # MOVE THIS TO CARTOLA_PROJECT
+
 
     gcs = GCSStorage("cartola.json", "cartola-360814")
     date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")

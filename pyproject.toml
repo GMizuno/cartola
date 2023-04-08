@@ -12,6 +12,7 @@ cartola-project = {git = "git@github.com:GMizuno/cartola_project.git"}
 python-decouple = "^3.8"
 pendulum = "^2.1.2"
 pyarrow = "^11.0.0"
+dataclasses-json = "^0.5.7"
 
 
 [build-system]
