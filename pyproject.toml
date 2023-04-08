@@ -13,6 +13,7 @@ python-decouple = "^3.8"
 pendulum = "^2.1.2"
 pyarrow = "^11.0.0"
 dataclasses-json = "^0.5.7"
+google-cloud-bigquery = "^3.9.0"
 
 
 [build-system]
