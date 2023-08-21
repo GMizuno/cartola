@@ -1,35 +1,21 @@
 from datetime import date
 
-from cartola_project import GCSStorage
-
-from cartola_2023.constant import ProjectId
-from cartola_2023.export import export_statistics_bronze, \
-    export_statistics_silver
-from cartola_2023.export.util import filter_by_date
+from cartola_2023.export.statistics import (
+    export_statistics_bronze,
+    export_statistics_silver,
+)
 from cartola_2023.util.util import config_with_date
 
-# TODO: Mover essa parte,
 params = [
     config_with_date(
-        league_id='71',
-        season_year='2022',
-        date_from=date(2022, 4, 10),
-        date_to=date(2022, 11, 13),
+        league_id="71",
+        season_year="2023",
+        date_from=date(2023, 4, 1),
+        date_to=date(2023, 4, 10),
     ),
 ]
 
-gcs = GCSStorage('cartola.json', ProjectId.GCP_PROD)
-match_id = filter_by_date(
-    cloudstorage=gcs,
-    league_id='71',
-    season_year='2022',
-    date_from=date(2022, 4, 10),
-    date_to=date(2022, 11, 13),
-)
-
-x = 320
-matches_id = match_id[x:(x + 20)]
 
 for param in params:
-    result = export_statistics_bronze(**param, matches_id=matches_id)
-    export_statistics_silver(result, param['league_id'], param['season_year'])
+    result = export_statistics_bronze(**param)
+    export_statistics_silver(result, param["league_id"], param["season_year"])

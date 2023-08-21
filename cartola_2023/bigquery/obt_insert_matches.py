@@ -1,14 +1,12 @@
 from google.cloud import bigquery
 
+from cartola_2023.bigquery import client
 from cartola_2023.bigquery.schema import schema_obt_matches
-from cartola_2023.constant import ProjectId
+from cartola_2023.constant import ProjectId, DATASET_ID
 
-client = bigquery.Client('cartola.json')
-
-project_id = f'{ProjectId.GCP_PROD}'
-dataset_id = 'cartola'
-tabela = 'obt_matches'
-table_id = f"{project_id}.{dataset_id}.{tabela}"
+project_id = f"{ProjectId.GCP_PROD}"
+tabela = "obt_matches"
+table_id = f"{project_id}.{DATASET_ID}.{tabela}"
 
 job_config = bigquery.LoadJobConfig(
     schema=schema_obt_matches,
