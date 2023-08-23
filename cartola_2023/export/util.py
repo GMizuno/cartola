@@ -5,6 +5,8 @@ from cartola_project import factory_reader
 from cartola_project.connector import CloudStorage
 from pandas import DataFrame
 
+from cartola_2023.constant import BUCKET
+
 
 def win_home(data: DataFrame):
     if data.goals_home == data.goals_away:
@@ -31,6 +33,7 @@ def get_all_ids(
         cloudstorage,
         f"matches/silver/league={league_id}/season={season_year}/",
     ).read_all_files()
+
     return list(
         set(
             d.id_team_home.drop_duplicates().to_list()
@@ -56,11 +59,13 @@ def filter_by_date(
         dataframe["date"], format="mixed"
     ).dt.date
 
-    result = dataframe.loc[
-        (dataframe["reference_date"] >= date_from)
-        & (dataframe["reference_date"] <= date_to)
-    ].match_id.to_list()
-    return result
+    result = set(
+        dataframe.loc[
+            (dataframe["reference_date"] >= date_from)
+            & (dataframe["reference_date"] <= date_to)
+        ].match_id.to_list()
+    )
+    return list(result)
 
 
 def create_obt_matches(cloudstorage: CloudStorage, reader) -> pd.DataFrame:

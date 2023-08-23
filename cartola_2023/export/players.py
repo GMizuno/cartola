@@ -11,7 +11,6 @@ from cartola_2023.constant import (
     FILE_NAME_JSON,
     FILE_NAME_PARQUET,
 )
-from cartola_2023.export.util import filter_by_date
 
 
 def export_player_bronze(
@@ -19,23 +18,12 @@ def export_player_bronze(
     api_secert_key: str,
     league_id: str,
     season_year: str,
-    date_from: Optional[date],
-    date_to: Optional[date],
     matches_id: Optional[list] = None,
     storage=None,
     writer=None,
-    reader=None,
 ) -> list:
     partidas = Players(api_host_key, api_secert_key)
     date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
-
-    if matches_id is None and date_from is not None and date_to is not None:
-        matches_id = filter_by_date(
-            storage, league_id, season_year, date_from, date_to, reader
-        )
-
-    elif date_from is None or date_to is None:
-        raise ValueError(f"date_from e date_to nao podem ser nulos")
 
     data = partidas.get_data(match_id=matches_id)
 

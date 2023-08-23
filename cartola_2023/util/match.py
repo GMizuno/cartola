@@ -1,6 +1,6 @@
 from cartola_2023.constant import ProjectId, BUCKET
 from cartola_2023.export.matches import export_matches_bronze, export_matches_silver
-from cartola_2023.util.util import config_without_date
+from decouple import config
 from cartola_project import factory_writer, factory_storage
 
 storage = factory_storage.get_storage("GCP")
@@ -9,15 +9,19 @@ json_writer = factory_writer.get_storage("JSON")
 parquet_writer = factory_writer.get_storage("Parquet")
 
 
-params = [
-    config_without_date(
-        league_id="71", season_year="2023", storage=gcs, writer=json_writer
-    ),
-]
+result = export_matches_bronze(
+    config("API_HOST_KEY"),
+    config("API_SECERT_KEY"),
+    "71",
+    "2023",
+    gcs,
+    json_writer,
+)
 
-
-for param in params:
-    result = export_matches_bronze(**param)
-    export_matches_silver(
-        result, param["league_id"], param["season_year"], gcs, parquet_writer
-    )
+export_matches_silver(
+    result,
+    "71",
+    "2023",
+    gcs,
+    parquet_writer,
+)

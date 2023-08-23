@@ -29,6 +29,8 @@ def config_with_date(
     date_to: Optional[date],
     api_host_key: str = "API_HOST_KEY",
     api_secert_key: str = "API_SECERT_KEY",
+    storage=None,
+    writer=None,
 ) -> dict:
     return {
         "api_host_key": config(api_host_key),
@@ -37,4 +39,6 @@ def config_with_date(
         "season_year": season_year,
         "date_from": date_from,
         "date_to": date_to,
+        "storage": storage,
+        "writer": writer,
     }

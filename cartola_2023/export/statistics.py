@@ -11,7 +11,6 @@ from cartola_2023.constant import (
     FILE_NAME_JSON,
     FILE_NAME_PARQUET,
 )
-from cartola_2023.export.util import filter_by_date
 
 
 def export_statistics_bronze(
@@ -19,19 +18,11 @@ def export_statistics_bronze(
     api_secert_key: str,
     league_id: str,
     season_year: str,
-    date_from: date,
-    date_to: date,
     matches_id: Optional[list] = None,
     storage=None,
     writer=None,
-    reader=None,
 ) -> list:
     statistics = Matches(api_host_key, api_secert_key)
-
-    if matches_id is None:
-        matches_id = filter_by_date(
-            storage, league_id, season_year, date_from, date_to, reader
-        )
 
     data = statistics.get_data(match_id=matches_id)
 

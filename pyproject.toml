@@ -8,13 +8,15 @@ packages = [{include = "cartola_2023"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-python-decouple = "^3.8"
 pendulum = "^2.1.2"
 pyarrow = "^11.0.0"
 dataclasses-json = "^0.5.7"
 google-cloud-bigquery = "^3.9.0"
 cartola-project = {git = "https://github.com/GMizuno/cartola_project"}
 
+
+[tool.poetry.group.dev.dependencies]
+python-decouple = "^3.8"
 
 [build-system]
 requires = ["poetry-core"]

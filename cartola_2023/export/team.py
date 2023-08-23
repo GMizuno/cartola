@@ -14,12 +14,17 @@ from cartola_2023.export.util import get_all_ids
 
 
 def export_team_bronze(
-    api_host_key: str, api_secert_key: str, league_id: str, season_year: str
+    api_host_key: str,
+    api_secert_key: str,
+    league_id: str,
+    season_year: str,
+    storage,
+    writer,
+    reader,
 ) -> list[dict]:
-    gcs = GCSStorage("cartola.json", ProjectId.GCP_PROD)
     times = Teams(api_host_key, api_secert_key)
 
-    ids = get_all_ids(gcs, league_id, season_year)
+    ids = get_all_ids(storage, league_id, season_year, reader)
     data = times.get_data(team_id=ids)
 
     date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
@@ -30,17 +35,20 @@ def export_team_bronze(
         SEASON_YEAR=season_year,
         DATE=date,
     )
-    JsonWriter(gcs, BUCKET, file_name, data).write()
+    writer(storage, file_name, data).write()
 
     return data
 
 
 def export_team_silver(
-    file: dict | list[dict], league_id: str, season_year: str
+    file: dict | list[dict],
+    league_id: str,
+    season_year: str,
+    storage,
+    writer,
 ) -> None:
     data = TeamsTransformer(file)._get_transformation()
 
-    gcs = GCSStorage("cartola.json", ProjectId.GCP_PROD)
     date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
     file_name = FILE_NAME_PARQUET.format(
         FOLDER=StorageFolder.TEAMS,
@@ -49,4 +57,4 @@ def export_team_silver(
         SEASON_YEAR=season_year,
         DATE=date,
     )
-    ParquetWriter(gcs, BUCKET, file_name, data).write()
+    writer(storage, file_name, data).write()

@@ -24,7 +24,7 @@ files = [
 
 [[package]]
 name = "cartola-project"
-version = "0.1.dev102+gdf2a9fc"
+version = "0.1.dev107+g8fd279a"
 description = ""
 optional = false
 python-versions = ">=3.8"
@@ -61,7 +61,7 @@ urllib3 = "1.26.14"
 type = "git"
 url = "https://github.com/GMizuno/cartola_project"
 reference = "HEAD"
-resolved_reference = "4ee0f1a1c599cb074124c33cbd887afcd90240a8"
+resolved_reference = "cc848f54382d082ea3f04bfbec2760a69788c11b"
 
 [[package]]
 name = "certifi"
@@ -887,4 +887,4 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4445bb1a2711c840ebce72389f79ac7b609b4ba9a56e6c59bdafc093c3e2b0b7"
+content-hash = "3d1ad9f65b485dd251b7e65bb3ac4d67f2faf66600e2ffd520253da3aacaf9bc"
