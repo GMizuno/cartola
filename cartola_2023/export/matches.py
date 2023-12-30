@@ -7,7 +7,7 @@ from cartola_2023.constant import (
     FILE_NAME_JSON,
     FILE_NAME_PARQUET,
 )
-from cartola_project.transformations import FixturesTransformer
+from cartola_project.transformations import MatchTransformer
 
 
 def export_matches_bronze(
@@ -41,7 +41,7 @@ def export_matches_silver(
     storage,
     writer,
 ) -> None:
-    data = FixturesTransformer(file)._get_transformation()
+    data = MatchTransformer(file).transformation()
 
     date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
     file_name = FILE_NAME_PARQUET.format(

@@ -46,16 +46,15 @@ def export_player_silver(
     storage=None,
     writer=None,
 ) -> None:
-    data = PlayerTransformer(file)._get_transformation()
+    data = PlayerTransformer(file).transformation()
     data = data.astype(str)
 
-    date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
     file_name = FILE_NAME_PARQUET.format(
         FOLDER=StorageFolder.PLAYERS,
         BUCKET=Bucket.SILVER,
         LEAGUE_ID=league_id,
         SEASON_YEAR=season_year,
-        DATE=date,
+        DATE=pendulum.now().strftime("%Y-%d-%m_%H:%M:%S"),
     )
     print(file_name)
     writer(storage, file_name, data).write()

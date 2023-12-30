@@ -1,9 +1,8 @@
-from datetime import date
 from typing import Optional
 
 import pendulum
 from cartola_project import Matches
-from cartola_project.transformations import MatchTransformer
+from cartola_project.transformations import StatisticsTransformer
 
 from cartola_2023.constant import (
     StorageFolder,
@@ -23,16 +22,14 @@ def export_statistics_bronze(
     writer=None,
 ) -> list:
     statistics = Matches(api_host_key, api_secert_key)
-
     data = statistics.get_data(match_id=matches_id)
 
-    date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
     file_name = FILE_NAME_JSON.format(
         FOLDER=StorageFolder.STATISTICS,
         BUCKET=Bucket.BRONZE,
         LEAGUE_ID=league_id,
         SEASON_YEAR=season_year,
-        DATE=date,
+        DATE=pendulum.now().strftime("%Y-%d-%m_%H:%M:%S"),
     )
     writer(storage, file_name, data).write()
 
@@ -46,7 +43,7 @@ def export_statistics_silver(
     storage,
     writer,
 ) -> None:
-    data = MatchTransformer(file)._get_transformation()
+    data = StatisticsTransformer(file).transformation()
 
     date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
     file_name = FILE_NAME_PARQUET.format(

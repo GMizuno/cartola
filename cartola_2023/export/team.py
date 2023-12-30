@@ -1,15 +1,13 @@
 import pendulum
 
-from cartola_project import Teams, factory_reader, factory_writer, factory_storage
+from cartola_project import Teams
 from cartola_2023.constant import (
     StorageFolder,
     Bucket,
-    ProjectId,
-    BUCKET,
     FILE_NAME_JSON,
     FILE_NAME_PARQUET,
 )
-from cartola_project.transformations import TeamsTransformer
+from cartola_project.transformations import TeamTransformer
 from cartola_2023.export.util import get_all_ids
 
 
@@ -47,7 +45,7 @@ def export_team_silver(
     storage,
     writer,
 ) -> None:
-    data = TeamsTransformer(file)._get_transformation()
+    data = TeamTransformer(file).transformation()
 
     date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
     file_name = FILE_NAME_PARQUET.format(

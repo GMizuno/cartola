@@ -291,3 +291,4 @@ poetry.toml
 /.idea/vcs.xml
 *.parquet
 cartola.json
+/.idea/*

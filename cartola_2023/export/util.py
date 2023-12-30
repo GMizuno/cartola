@@ -1,11 +1,8 @@
 from datetime import date
 
 import pandas as pd
-from cartola_project import factory_reader
 from cartola_project.connector import CloudStorage
 from pandas import DataFrame
-
-from cartola_2023.constant import BUCKET
 
 
 def win_home(data: DataFrame):
@@ -63,7 +60,7 @@ def filter_by_date(
         dataframe.loc[
             (dataframe["reference_date"] >= date_from)
             & (dataframe["reference_date"] <= date_to)
-        ].match_id.to_list()
+        ].partida_id.to_list()
     )
     return list(result)
 

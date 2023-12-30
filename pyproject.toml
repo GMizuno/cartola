@@ -13,6 +13,8 @@ pyarrow = "^11.0.0"
 dataclasses-json = "^0.5.7"
 google-cloud-bigquery = "^3.9.0"
 cartola-project = {git = "https://github.com/GMizuno/cartola_project"}
+pydantic = "^2.5.3"
+flatten-json = "^0.1.14"
 
 
 [tool.poetry.group.dev.dependencies]
