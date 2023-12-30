@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class Bucket(str, Enum):
+class Bucket(StrEnum):
     BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"

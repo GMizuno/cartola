@@ -1,6 +1,6 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class ProjectId(str, Enum):
+class ProjectId(StrEnum):
     GCP_PROD = "cartola-360814"
     GCP_DEV = "cartola-360814_dev"

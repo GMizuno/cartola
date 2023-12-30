@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import StrEnum
 
 
-class StorageFolder(str, Enum):
+class StorageFolder(StrEnum):
     MATCHES = "matches"
     TEAMS = "teams"
     STATISTICS = "statistics"
