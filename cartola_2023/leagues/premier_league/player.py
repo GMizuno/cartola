@@ -2,7 +2,7 @@ from datetime import date
 
 from cartola_2023.export.players import export_player_bronze, export_player_silver
 from cartola_2023.export.util import filter_by_date
-from cartola_2023.leagues.brasileirao import (
+from cartola_2023.leagues.premier_league import (
     gcs,
     parquet_reader,
     parquet_writer,
@@ -12,8 +12,8 @@ from cartola_2023.leagues.brasileirao import (
     season_year,
 )
 
-date_from = date(2023, 4, 1)
-date_to = date(2023, 4, 10)
+date_from = date(2023, 12, 1)
+date_to = date(2023, 12, 10)
 
 matches_id = filter_by_date(
     gcs, league_id, season_year, date_from, date_to, parquet_reader

@@ -1,8 +1,11 @@
 from datetime import date
 
 import pandas as pd
-from cartola_project.connector import CloudStorage
+from typing import TYPE_CHECKING
 from pandas import DataFrame
+
+if TYPE_CHECKING:
+    from cartola_project.storage import CloudStorage
 
 
 def win_home(data: DataFrame):
@@ -17,14 +20,14 @@ def win_home(data: DataFrame):
 def win(data: DataFrame):
     if data.win_home == "home_draw":
         return "draw"
-    elif data.win_home == "home_win" and data.home == True:
+    elif data.win_home == "home_win" and data.home is True:
         return "win"
     else:
         return "lose"
 
 
 def get_all_ids(
-    cloudstorage: CloudStorage, league_id: str, season_year: str, reader
+    cloudstorage: "CloudStorage", league_id: str, season_year: str, reader
 ) -> list:
     d = reader(
         cloudstorage,
@@ -40,7 +43,7 @@ def get_all_ids(
 
 
 def filter_by_date(
-    cloudstorage: CloudStorage,
+    cloudstorage: "CloudStorage",
     league_id: str,
     season_year: str,
     date_from: date,
@@ -65,7 +68,7 @@ def filter_by_date(
     return list(result)
 
 
-def create_obt_matches(cloudstorage: CloudStorage, reader) -> pd.DataFrame:
+def create_obt_matches(cloudstorage: "CloudStorage", reader) -> pd.DataFrame:
     dataframe1 = reader(cloudstorage, "matches/silver/").read_all_files()
 
     dataframe2 = reader(cloudstorage, "statistics/silver/").read_all_files()
@@ -85,10 +88,10 @@ def create_obt_matches(cloudstorage: CloudStorage, reader) -> pd.DataFrame:
     return result.drop_duplicates()
 
 
-def create_obt_players(cloudstorage: CloudStorage, reader) -> pd.DataFrame:
+def create_obt_players(cloudstorage: "CloudStorage", reader) -> pd.DataFrame:
     dataframe1 = reader(cloudstorage, "players/silver/").read_all_files()
 
-    dataframe2 = reader(cloudstorage, f"matches/silver/").read_all_files()
+    dataframe2 = reader(cloudstorage, "matches/silver/").read_all_files()
 
     dataframe1 = dataframe1.astype({"fixture": "int64"})
     dataframe2 = dataframe2.astype({"match_id": "int64"})

@@ -1,5 +1,5 @@
 from cartola_2023.export.matches import export_matches_bronze, export_matches_silver
-from cartola_2023.leagues.brasileirao import (
+from cartola_2023.leagues.premier_league import (
     gcs,
     json_writer,
     parquet_writer,

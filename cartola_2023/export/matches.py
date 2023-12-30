@@ -21,13 +21,12 @@ def export_matches_bronze(
     partidas = Fixtures(api_host_key, api_secert_key)
     data = partidas.get_data(league_id=league_id, season_year=season_year)
 
-    date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
     file_name = FILE_NAME_JSON.format(
         FOLDER=StorageFolder.MATCHES,
         BUCKET=Bucket.BRONZE,
         LEAGUE_ID=league_id,
         SEASON_YEAR=season_year,
-        DATE=date,
+        DATE=pendulum.now().strftime("%Y-%d-%m"),
     )
     writer(storage, file_name, data).write()
 
@@ -43,12 +42,11 @@ def export_matches_silver(
 ) -> None:
     data = MatchTransformer(file).transformation()
 
-    date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
     file_name = FILE_NAME_PARQUET.format(
         FOLDER=StorageFolder.MATCHES,
         BUCKET=Bucket.SILVER,
         LEAGUE_ID=league_id,
         SEASON_YEAR=season_year,
-        DATE=date,
+        DATE=pendulum.now().strftime("%Y-%d-%m"),
     )
     writer(storage, file_name, data).write()

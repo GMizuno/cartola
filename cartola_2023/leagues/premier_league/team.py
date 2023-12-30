@@ -1,5 +1,5 @@
 from cartola_2023.export.team import export_team_bronze, export_team_silver
-from cartola_2023.leagues.brasileirao import (
+from cartola_2023.leagues.premier_league import (
     gcs,
     json_writer,
     parquet_writer,
