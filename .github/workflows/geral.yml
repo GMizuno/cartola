@@ -40,13 +40,12 @@ jobs:
       TYPE: matchs-teams
 
     steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
       - name: "Set build version"
         id: set_version
         run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
-
-      - name: "Print folders"
-        id: print
-        run: echo $(ls)
 
       - name: "Build image"
         run: |-
@@ -64,13 +63,12 @@ jobs:
       TYPE: players
 
     steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
       - name: "Set build version"
         id: set_version
         run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
-
-      - name: "Print folders"
-        id: print
-        run: echo $(ls)
 
       - name: "Build image"
         run: |-
