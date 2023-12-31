@@ -1,3 +1,5 @@
+[![.github/workflows/artifact_partida.yml](https://github.com/GMizuno/cartola/actions/workflows/artifact_partida.yml/badge.svg)](https://github.com/GMizuno/cartola/actions/workflows/artifact_partida.yml)
+
 ## Install git dependencies
 
 ```bash
