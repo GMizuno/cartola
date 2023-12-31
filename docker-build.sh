@@ -1,8 +1,8 @@
 #!/bin/bash
 
-docker build -t python_teste .
+docker build --platform linux/amd64 -t cartola_local .
 
-docker tag python_teste local_image
-docker tag python_teste us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python:0.1.5
+docker tag cartola_local local_image
+docker tag cartola_local us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python:0.1.6
 
-docker push us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python:0.1.5
+docker push us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python:0.1.6
