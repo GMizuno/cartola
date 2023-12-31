@@ -5,12 +5,12 @@ RUN pip install poetry==1.5.1
 COPY pyproject.toml poetry.lock ./
 RUN touch README.md
 
-RUN poetry install --without dev --no-root
+RUN poetry install --no-root
 
 COPY cartola_2023 ./cartola_2023
-RUN poetry install --without dev
+RUN poetry install
 
 EXPOSE 8080
-ENTRYPOINT ["ls"]
+ENTRYPOINT ["poetry", "run", "python", "-m", "cartola_2023.leagues.brasileirao.match.py"]
 
 
