@@ -12,30 +12,8 @@ env:
   GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python
 
 jobs:
-  auth:
+  docker-matchs-teams:
     runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-
-      - id: "auth"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
-
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
-
-      - name: "Use gcloud CLI"
-        run: "gcloud info"
-
-      - name: "Docker auth"
-        run: |-
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
-
-  docker-obt:
-    runs-on: ubuntu-latest
-    needs: auth
     env:
       TYPE: matchs-teams
 
@@ -43,7 +21,7 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v3"
 
-      - id: "auth"
+      - id: "Auth"
         uses: "google-github-actions/auth@v1"
         with:
           credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
@@ -70,9 +48,50 @@ jobs:
 
   docker-players:
     runs-on: ubuntu-latest
-    needs: auth
     env:
       TYPE: players
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Set build version"
+        id: set_version
+        run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
+
+      - name: "Build image"
+        run: |-
+          docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
+                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+
+      - name: "Push image"
+        run: |-
+          docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+  docker-obt:
+    runs-on: ubuntu-latest
+    env:
+      TYPE: obt
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - name: "Set build version"
+        id: set_version
+        run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
+
+      - name: "Build image"
+        run: |-
+          docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
+                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+
+      - name: "Push image"
+        run: |-
+          docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+  docker-statistics:
+    runs-on: ubuntu-latest
+    env:
+      TYPE: statistics
 
     steps:
       - name: "Checkout"
