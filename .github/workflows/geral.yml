@@ -62,13 +62,13 @@ jobs:
           MATCHS-TEAMS: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
           docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
-                         --platform linux/amd64 --tag ${{ env.TEAMS }}
+                         --platform linux/amd64 --tag ${{ env.MATCHS-TEAMS }}
 
       - name: "Push image"
         env:
           MATCHS-TEAMS: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
-          docker push ${{ env.TEAMS }}
+          docker push ${{ env.MATCHS-TEAMS }}
 
 #  docker-players:
 #    runs-on: ubuntu-latest
