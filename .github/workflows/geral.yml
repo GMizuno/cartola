@@ -175,7 +175,7 @@ jobs:
           docker push ${{ env.STATISTICS }}
   cloud-run_players:
     runs-on: ubuntu-latest
-    needs: [tags_versions, docker-matchs-teams, docker-players, docker-obt, docker-statistics]
+    needs: [ tags_versions, docker-matchs-teams, docker-players, docker-obt, docker-statistics ]
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v3"
@@ -194,6 +194,7 @@ jobs:
         run: |-
           gcloud run jobs create partidas-71 \
                 --image=${{ env.IMG }} \
+                --service-account=cartola-projeto-python@cartola-360814.iam.gserviceaccount.com \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
                 --region=us-central1 \
                 --project=cartola-360814 \
