@@ -37,11 +37,16 @@ jobs:
     runs-on: ubuntu-latest
     needs: auth
     env:
-      TYPE: matchs-team
+      TYPE: matchs-teams
+
     steps:
       - name: "Set build version"
         id: set_version
         run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
+
+      - name: "Print folders"
+        id: print
+        run: ls
 
       - name: "Build image"
         run: |-
@@ -57,10 +62,15 @@ jobs:
     needs: auth
     env:
       TYPE: players
+
     steps:
       - name: "Set build version"
         id: set_version
         run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
+
+      - name: "Print folders"
+        id: print
+        run: ls
 
       - name: "Build image"
         run: |-
