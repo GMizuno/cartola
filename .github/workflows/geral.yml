@@ -43,6 +43,18 @@ jobs:
       - name: "Checkout"
         uses: "actions/checkout@v3"
 
+      - id: "auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Docker auth"
+        run: |-
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
       - name: "Set build version"
         id: set_version
         run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
