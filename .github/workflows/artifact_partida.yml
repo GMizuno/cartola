@@ -9,7 +9,7 @@ on:
 env:
   PROJECT_ID: cartola-360814
   REGION: us-east1
-  GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/
+  GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python:0.1.12
 
 jobs:
   build-push-artifact:
@@ -34,8 +34,7 @@ jobs:
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
       - name: Build image
-        run: docker build . --file partidas.Dockerfile --tag ${{ env.GAR_LOCATION }}
-        working-directory: ./docker_images
+        run: docker build . --file ./docker_images/partidas.Dockerfile --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}
 
       - name: Push image
         run: docker push ${{ env.GAR_LOCATION }}
