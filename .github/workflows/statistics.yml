@@ -1,4 +1,4 @@
-name: Build and Push to Artifact Registry
+name: Build and Push to Artifact Registry Statistics
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
 
       - name: "Set build version"
         id: set_version
-        run: echo "VERSION=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
 
       - id: "auth"
         uses: "google-github-actions/auth@v1"
