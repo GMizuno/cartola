@@ -42,4 +42,4 @@ jobs:
           docker build . --file ./docker_images/partidas.Dockerfile --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}:${{ env.VERSION }}
 
       - name: Push image
-        run: docker push ${{ env.GAR_LOCATION }}
+        run: docker push ${{ env.GAR_LOCATION }}:${{ env.VERSION }}
