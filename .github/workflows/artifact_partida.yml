@@ -11,7 +11,7 @@ env:
   REGION: us-east1
   GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/
 
-job:
+jobs:
   build-push-artifact:
     runs-on: ubuntu-latest
     steps:
