@@ -173,3 +173,31 @@ jobs:
           STATISTICS: ${{needs.tags_versions.outputs.tag_statistics}}
         run: |-
           docker push ${{ env.STATISTICS }}
+  cloud-run_players:
+    runs-on: ubuntu-latest
+    needs: [tags_versions, docker-matchs-teams, docker-players, docker-obt, docker-statistics]
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - id: "Auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Cloud Run Deploy Jobs"
+        env:
+          MATCHS-TEAMS: ${{needs.tags_versions.outputs.tag_matchs-teams}}
+        run: |-
+          gcloud run jobs create partidas_71 \
+                --image=${{ env.MATCHS-TEAMS }} \
+                --service-account=bucket-cartola@cartola-360814.iam.gserviceaccount.com \
+                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
+                --region=us-central1 \
+                --project=cartola-360814 \
+                --tasks=1 \
+                --max-retries=2 \
+                --parallelism=1
