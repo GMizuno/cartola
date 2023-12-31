@@ -188,14 +188,26 @@ jobs:
       - name: "Set up Cloud SDK"
         uses: "google-github-actions/setup-gcloud@v1"
 
-      - name: "Cloud Run Deploy Jobs"
+      - name: "Cloud Run Deploy Jobs da Liga 71"
         env:
-          MATCHS-TEAMS: ${{needs.tags_versions.outputs.tag_matchs-teams}}
+          IMG: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
-          gcloud run jobs create partidas_71 \
-                --image=${{ env.MATCHS-TEAMS }} \
-                --service-account=bucket-cartola@cartola-360814.iam.gserviceaccount.com \
+          gcloud run jobs create partidas-71 \
+                --image=${{ env.IMG }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
+                --region=us-central1 \
+                --project=cartola-360814 \
+                --tasks=1 \
+                --max-retries=2 \
+                --parallelism=1
+
+      - name: "Cloud Run Deploy Jobs da Liga 39"
+        env:
+          IMG: ${{needs.tags_versions.outputs.tag_matchs-teams}}
+        run: |-
+          gcloud run jobs create partidas-39 \
+                --image=${{ env.IMG }} \
+                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
                 --region=us-central1 \
                 --project=cartola-360814 \
                 --tasks=1 \
