@@ -41,7 +41,7 @@ jobs:
       - name: "Build image"
         run: |-
           docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
-                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.GAR_LOCATION }}:${{ env.VERSION }}
+                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
 
       - name: "Push image"
-        run: docker push ${{ env.GAR_LOCATION }}:${{ env.VERSION }}
+        run: docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
