@@ -2,9 +2,9 @@ name: Build and Push to Artifact Registry Geral
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main" ]
 
 env:
   PROJECT_ID: cartola-360814
@@ -12,10 +12,34 @@ env:
   GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python
 
 jobs:
+  tags_versions:
+    runs-on: ubuntu-latest
+    # Map a step output to a job output
+    outputs:
+      tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
+      tag_obt: ${{ steps.obt.outputs.tag }}
+      tag_players: ${{ steps.players.outputs.tag }}
+      tag_statistics: ${{ steps.statistics.outputs.tag }}
+    steps:
+      - id: matchs-teams
+        env:
+          TYPE: matchs-teams
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+      - id: obt
+        env:
+          TYPE: obt
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+      - id: players
+        env:
+          TYPE: players
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+      - id: statistics
+        env:
+          TYPE: statistics
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV >> $GITHUB_OUTPUT
   docker-matchs-teams:
     runs-on: ubuntu-latest
-    env:
-      TYPE: matchs-teams
+    needs: tags_versions
 
     steps:
       - name: "Checkout"
@@ -33,114 +57,101 @@ jobs:
         run: |-
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
-      - name: "Set build version"
-        id: set_version
-        run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
-
       - name: "Build image"
+        env:
+          MATCHS-TEAMS: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
           docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
-                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+                         --platform linux/amd64 --tag ${{ env.TEAMS }}
 
       - name: "Push image"
+        env:
+          MATCHS-TEAMS: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
-          docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+          docker push ${{ env.TEAMS }}
 
-  docker-players:
-    runs-on: ubuntu-latest
-    env:
-      TYPE: players
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-
-      - id: "Auth"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
-
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
-
-      - name: "Docker auth"
-        run: |-
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
-
-      - name: "Set build version"
-        id: set_version
-        run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
-      - name: "Build image"
-        run: |-
-          docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
-                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
-
-      - name: "Push image"
-        run: |-
-          docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
-  docker-obt:
-    runs-on: ubuntu-latest
-    env:
-      TYPE: obt
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-
-      - id: "Auth"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
-
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
-
-      - name: "Docker auth"
-        run: |-
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
-
-      - name: "Set build version"
-        id: set_version
-        run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
-
-      - name: "Build image"
-        run: |-
-          docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
-                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
-
-      - name: "Push image"
-        run: |-
-          docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
-  docker-statistics:
-    runs-on: ubuntu-latest
-    env:
-      TYPE: statistics
-
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-
-      - id: "Auth"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
-
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
-
-      - name: "Docker auth"
-        run: |-
-          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
-
-      - name: "Set build version"
-        id: set_version
-        run: echo "VERSION=$(echo $(date +'%Y%m%d%H%M%S') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
-
-      - name: "Build image"
-        run: |-
-          docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
-                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
-
-      - name: "Push image"
-        run: |-
-          docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+#  docker-players:
+#    runs-on: ubuntu-latest
+#    needs: tags_versions
+#
+#    steps:
+#      - name: "Checkout"
+#        uses: "actions/checkout@v3"
+#
+#      - id: "Auth"
+#        uses: "google-github-actions/auth@v1"
+#        with:
+#          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+#
+#      - name: "Set up Cloud SDK"
+#        uses: "google-github-actions/setup-gcloud@v1"
+#
+#      - name: "Docker auth"
+#        run: |-
+#          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+#
+#
+#      - name: "Build image"
+#        run: |-
+#          docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
+#                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+#
+#      - name: "Push image"
+#        run: |-
+#          docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+#  docker-obt:
+#    runs-on: ubuntu-latest
+#    needs: tags_versions
+#
+#    steps:
+#      - name: "Checkout"
+#        uses: "actions/checkout@v3"
+#
+#      - id: "Auth"
+#        uses: "google-github-actions/auth@v1"
+#        with:
+#          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+#
+#      - name: "Set up Cloud SDK"
+#        uses: "google-github-actions/setup-gcloud@v1"
+#
+#      - name: "Docker auth"
+#        run: |-
+#          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+#
+#      - name: "Build image"
+#        run: |-
+#          docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
+#                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+#
+#      - name: "Push image"
+#        run: |-
+#          docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+#  docker-statistics:
+#    runs-on: ubuntu-latest
+#    needs: tags_versions
+#
+#    steps:
+#      - name: "Checkout"
+#        uses: "actions/checkout@v3"
+#
+#      - id: "Auth"
+#        uses: "google-github-actions/auth@v1"
+#        with:
+#          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+#
+#      - name: "Set up Cloud SDK"
+#        uses: "google-github-actions/setup-gcloud@v1"
+#
+#      - name: "Docker auth"
+#        run: |-
+#          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+#
+#      - name: "Build image"
+#        run: |-
+#          docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
+#                         --platform linux/amd64 --tag ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
+#
+#      - name: "Push image"
+#        run: |-
+#          docker push ${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ env.VERSION }}
