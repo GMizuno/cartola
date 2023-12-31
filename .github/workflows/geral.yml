@@ -59,6 +59,7 @@ jobs:
 
       - name: "Build image"
         env:
+          TYPE: matchs-teams
           MATCHS-TEAMS: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
           docker build . --file ./docker_images/${{ env.TYPE }}.Dockerfile \
@@ -66,6 +67,7 @@ jobs:
 
       - name: "Push image"
         env:
+
           MATCHS-TEAMS: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
           docker push ${{ env.MATCHS-TEAMS }}
