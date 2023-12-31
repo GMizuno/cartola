@@ -46,7 +46,7 @@ jobs:
 
       - name: "Print folders"
         id: print
-        run: ls
+        run: echo $(ls)
 
       - name: "Build image"
         run: |-
@@ -70,7 +70,7 @@ jobs:
 
       - name: "Print folders"
         id: print
-        run: ls
+        run: echo $(ls)
 
       - name: "Build image"
         run: |-
