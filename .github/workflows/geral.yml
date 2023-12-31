@@ -194,7 +194,7 @@ jobs:
         run: |-
           gcloud run jobs create partidas-71 \
                 --image=${{ env.IMG }} \
-                --service-account=${{ env.SERVICE_ACCOUNT }} \
+                --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
                 --region=us-central1 \
                 --project=cartola-360814 \
@@ -208,7 +208,7 @@ jobs:
         run: |-
           gcloud run jobs create partidas-39 \
                 --image=${{ env.IMG }} \
-                --service-account=${{ env.SERVICE_ACCOUNT }} \
+                --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
                 --region=us-central1 \
                 --project=cartola-360814 \
