@@ -292,3 +292,5 @@ poetry.toml
 *.parquet
 cartola.json
 /.idea/*
+.github/workflows/teste.yaml
+.github/workflows/teste_work2.yaml
