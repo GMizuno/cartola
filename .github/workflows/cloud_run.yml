@@ -55,7 +55,7 @@ jobs:
         env:
           IMG: ${{needs.tags_versions.outputs.tag_players}}
         run: |-
-          gcloud run jobs create partidas-71 \
+          gcloud run jobs create players-71 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
@@ -69,7 +69,7 @@ jobs:
         env:
           IMG: ${{needs.tags_versions.outputs.tag_players}}
         run: |-
-          gcloud run jobs create partidas-39 \
+          gcloud run jobs create players-39 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
@@ -97,7 +97,7 @@ jobs:
         env:
           IMG: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
-          gcloud run jobs create partidas-71 \
+          gcloud run jobs create teams-71 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
@@ -111,7 +111,7 @@ jobs:
         env:
           IMG: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
-          gcloud run jobs create partidas-39 \
+          gcloud run jobs create teams-39 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
@@ -139,7 +139,7 @@ jobs:
         env:
           IMG: ${{needs.tags_versions.outputs.tag_statistics}}
         run: |-
-          gcloud run jobs create partidas-71 \
+          gcloud run jobs create stats-71 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
@@ -153,7 +153,7 @@ jobs:
         env:
           IMG: ${{needs.tags_versions.outputs.tag_statistics}}
         run: |-
-          gcloud run jobs create partidas-39 \
+          gcloud run jobs create stats-39 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
@@ -181,7 +181,7 @@ jobs:
         env:
           IMG: ${{needs.tags_versions.outputs.tag_obt}}
         run: |-
-          gcloud run jobs create partidas-71 \
+          gcloud run jobs create obt-71 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
@@ -195,7 +195,7 @@ jobs:
         env:
           IMG: ${{needs.tags_versions.outputs.tag_obt}}
         run: |-
-          gcloud run jobs create partidas-39 \
+          gcloud run jobs create obt-39 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
