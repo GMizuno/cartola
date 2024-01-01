@@ -17,8 +17,7 @@ jobs:
     outputs:
       tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
       tag_obt: ${{ steps.obt.outputs.tag }}
-      tag_players: ${{ steps.players.outputs.tag }}
-      tag_statistics: ${{ steps.statistics.outputs.tag }}
+      tag_players_statistics: ${{ steps.players.outputs.tag }}
     steps:
       - id: matchs-teams
         env:
@@ -28,15 +27,11 @@ jobs:
         env:
           TYPE: obt
         run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
-      - id: players
+      - id: players-statistics
         env:
-          TYPE: players
+          TYPE: players-statistics
         run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
-      - id: statistics
-        env:
-          TYPE: statistics
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
-  cloud-run_players:
+  cloud-run_players_stats:
     runs-on: ubuntu-latest
     needs: [ tags_versions ]
     steps:
@@ -67,7 +62,7 @@ jobs:
 
       - name: "Cloud Run Deploy Jobs da Liga 39"
         env:
-          IMG: ${{needs.tags_versions.outputs.tag_players}}
+          IMG: ${{needs.tags_versions.outputs.tag_players_statistics}}
         run: |-
           gcloud run jobs create players-39 \
                 --image=${{ env.IMG }} \
@@ -78,7 +73,7 @@ jobs:
                 --tasks=1 \
                 --max-retries=2 \
                 --parallelism=1
-  cloud-run_teams:
+  cloud-run_matchs-teams:
     runs-on: ubuntu-latest
     needs: [ tags_versions ]
     steps:
@@ -112,48 +107,6 @@ jobs:
           IMG: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
           gcloud run jobs create teams-39 \
-                --image=${{ env.IMG }} \
-                --service-account=${{ vars.SERVICE_ACCOUNT }} \
-                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
-                --region=us-central1 \
-                --project=cartola-360814 \
-                --tasks=1 \
-                --max-retries=2 \
-                --parallelism=1
-  cloud-run_stats:
-    runs-on: ubuntu-latest
-    needs: [ tags_versions ]
-    steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-
-      - id: "Auth"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
-
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
-
-      - name: "Cloud Run Deploy Jobs da Liga 71"
-        env:
-          IMG: ${{needs.tags_versions.outputs.tag_statistics}}
-        run: |-
-          gcloud run jobs create stats-71 \
-                --image=${{ env.IMG }} \
-                --service-account=${{ vars.SERVICE_ACCOUNT }} \
-                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
-                --region=us-central1 \
-                --project=cartola-360814 \
-                --tasks=1 \
-                --max-retries=2 \
-                --parallelism=1
-
-      - name: "Cloud Run Deploy Jobs da Liga 39"
-        env:
-          IMG: ${{needs.tags_versions.outputs.tag_statistics}}
-        run: |-
-          gcloud run jobs create stats-39 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
