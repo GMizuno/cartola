@@ -23,19 +23,19 @@ jobs:
       - id: matchs-teams
         env:
           TYPE: matchs-teams
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$(git rev-parse --short HEAD)" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
       - id: obt
         env:
           TYPE: obt
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$(git rev-parse --short HEAD)" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
       - id: players
         env:
           TYPE: players
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$(git rev-parse --short HEAD)" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
       - id: statistics
         env:
           TYPE: statistics
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$(git rev-parse --short HEAD)" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
   cloud-run_players:
     runs-on: ubuntu-latest
     needs: [ tags_versions ]
