@@ -48,7 +48,7 @@ jobs:
 
       - name: "Cloud Run Deploy Jobs da Liga 71"
         env:
-          IMG: ${{needs.tags_versions.outputs.tag_players}}
+          IMG: ${{needs.tags_versions.outputs.tag_players_statistics}}
         run: |-
           gcloud run jobs create players-stats-71 \
                 --image=${{ env.IMG }} \
