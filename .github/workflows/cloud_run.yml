@@ -17,7 +17,7 @@ jobs:
     outputs:
       tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
       tag_obt: ${{ steps.obt.outputs.tag }}
-      tag_players_statistics: ${{ steps.players.outputs.tag }}
+      tag_players_statistics: ${{ steps.players-statistics.outputs.tag }}
     steps:
       - id: matchs-teams
         env:
