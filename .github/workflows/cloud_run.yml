@@ -68,7 +68,8 @@ jobs:
           gcloud run jobs create players-stats-39 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
-                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
+                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
+                --set-secrets=API_SECERT_KEY=Rapid_Api_API_SECERT_KEY:1 \
                 --region=${{ env.REGION }} \
                 --project=cartola-360814 \
                 --tasks=1 \
