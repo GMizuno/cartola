@@ -15,7 +15,7 @@ jobs:
   example_matrix:
     strategy:
       matrix:
-        cloud_run: [players-stats-71, players-stats-39, matchs-teams-71, matchs-teams-39]
+        cloud_run: [players-stats-71, players-stats-39, matchs-teams-71, matchs-teams-39, obt]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
