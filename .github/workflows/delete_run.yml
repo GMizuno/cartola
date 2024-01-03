@@ -12,7 +12,7 @@ env:
   GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python
 
 jobs:
-  table_lists:
+  cloud_run:
     strategy:
       matrix:
         cloud_run: [players-stats-71, players-stats-39, matchs-teams-71, matchs-teams-39, obt]
@@ -32,6 +32,24 @@ jobs:
       - name: "Delete Cloud Run"
         run: |-
           gcloud run jobs delete ${{ matrix.cloud_run }}  --region ${{ env.REGION }} --quiet 
+
+
+  scheduler:
+    strategy:
+      matrix:
+        cloud_run: [players-stats-71, players-stats-39, matchs-teams-71, matchs-teams-39]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - id: "Auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
 
       - name: "Delete Scheduler"
         run: |-
