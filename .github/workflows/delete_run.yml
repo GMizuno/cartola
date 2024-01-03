@@ -31,4 +31,4 @@ jobs:
 
       - name: "Delete Cloud Run"
         run: |-
-          gcloud run jobs delete --region ${{ env.REGION }} --quiet {{ matrix.cloud_run }}
+          gcloud run jobs delete players-stats-71 --region ${{ env.REGION }} --quiet 
