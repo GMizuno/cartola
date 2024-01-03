@@ -2,7 +2,7 @@ name: Deploy Cloud Run
 
 on:
   workflow_run:
-    workflows: [ Build and Push to Artifact Registry Geral ]
+    workflows: [ Delete Cloud Run ]
     types:
       - completed
 
@@ -48,13 +48,14 @@ jobs:
 
       - name: "Cloud Run Deploy Jobs da Liga 71"
         env:
-          IMG: ${{needs.tags_versions.outputs.tag_players_statistics}}
+          IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
         run: |-
           gcloud run jobs create players-stats-71 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
-                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
-                --region=us-central1 \
+                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
+                --set-secrets=API_SECERT_KEY=Rapid_Api_API_SECERT_KEY:1 \
+                --region=${{ env.REGION }} \
                 --project=cartola-360814 \
                 --tasks=1 \
                 --max-retries=2 \
@@ -62,13 +63,13 @@ jobs:
 
       - name: "Cloud Run Deploy Jobs da Liga 39"
         env:
-          IMG: ${{needs.tags_versions.outputs.tag_players_statistics}}
+          IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
         run: |-
           gcloud run jobs create players-stats-39 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
                 --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
-                --region=us-central1 \
+                --region=${{ env.REGION }} \
                 --project=cartola-360814 \
                 --tasks=1 \
                 --max-retries=2 \
@@ -90,13 +91,14 @@ jobs:
 
       - name: "Cloud Run Deploy Jobs da Liga 71"
         env:
-          IMG: ${{needs.tags_versions.outputs.tag_matchs-teams}}
+          IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
         run: |-
           gcloud run jobs create matchs-teams-71 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
-                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
-                --region=us-central1 \
+                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
+                --set-secrets=API_SECERT_KEY=Rapid_Api_API_SECERT_KEY:1 \
+                --region=${{ env.REGION }} \
                 --project=cartola-360814 \
                 --tasks=1 \
                 --max-retries=2 \
@@ -104,13 +106,14 @@ jobs:
 
       - name: "Cloud Run Deploy Jobs da Liga 39"
         env:
-          IMG: ${{needs.tags_versions.outputs.tag_matchs-teams}}
+          IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
         run: |-
           gcloud run jobs create matchs-teams-39 \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
-                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
-                --region=us-central1 \
+                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
+                --set-secrets=API_SECERT_KEY=Rapid_Api_API_SECERT_KEY:1 \
+                --region=${{ env.REGION }} \
                 --project=cartola-360814 \
                 --tasks=1 \
                 --max-retries=2 \
@@ -132,28 +135,16 @@ jobs:
 
       - name: "Cloud Run Deploy Jobs da Liga 71"
         env:
-          IMG: ${{needs.tags_versions.outputs.tag_obt}}
+          IMG: ${{ needs.tags_versions.outputs.tag_obt }}
         run: |-
-          gcloud run jobs create obt-71 \
+          gcloud run jobs create obt \
                 --image=${{ env.IMG }} \
                 --service-account=${{ vars.SERVICE_ACCOUNT }} \
-                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
-                --region=us-central1 \
+                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},LEAGUE_ID=71,SEASON_YEAR=2023 \
+                --set-secrets=API_SECERT_KEY=Rapid_Api_API_SECERT_KEY:1 \
+                --region=${{ env.REGION }} \
                 --project=cartola-360814 \
                 --tasks=1 \
                 --max-retries=2 \
                 --parallelism=1
 
-      - name: "Cloud Run Deploy Jobs da Liga 39"
-        env:
-          IMG: ${{needs.tags_versions.outputs.tag_obt}}
-        run: |-
-          gcloud run jobs create obt-39 \
-                --image=${{ env.IMG }} \
-                --service-account=${{ vars.SERVICE_ACCOUNT }} \
-                --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},API_SECERT_KEY=${{ secrets.API_SECERT_KEY }},LEAGUE_ID=39,SEASON_YEAR=2023 \
-                --region=us-central1 \
-                --project=cartola-360814 \
-                --tasks=1 \
-                --max-retries=2 \
-                --parallelism=1
