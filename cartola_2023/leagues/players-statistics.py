@@ -24,7 +24,7 @@ matches_id = filter_by_date(
 )
 
 
-if matches_id != []:
+if matches_id:
     result_player = export_player_bronze(
         api_host_key,
         api_secert_key,
