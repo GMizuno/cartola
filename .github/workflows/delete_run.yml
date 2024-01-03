@@ -35,5 +35,5 @@ jobs:
 
       - name: "Delete Scheduler"
         run: |-
-          gcloud scheduler jobs delete ${{ matrix.cloud_run }} --region ${{ env.REGION }} --quiet
+          gcloud scheduler jobs delete ${{ matrix.cloud_run }} --location ${{ env.REGION }} --quiet
 
