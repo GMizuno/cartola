@@ -12,7 +12,7 @@ env:
   GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python
 
 jobs:
-  example_matrix:
+  table_lists:
     strategy:
       matrix:
         cloud_run: [players-stats-71, players-stats-39, matchs-teams-71, matchs-teams-39, obt]

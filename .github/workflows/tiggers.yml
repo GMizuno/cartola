@@ -1,0 +1,61 @@
+name: Trigger Jobs using Cron
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  PROJECT_ID: cartola-360814
+  REGION: us-east1
+  GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python
+jobs:
+  tags_versions:
+    runs-on: ubuntu-latest
+    outputs:
+      tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
+      tag_obt: ${{ steps.obt.outputs.tag }}
+      tag_players_statistics: ${{ steps.players-statistics.outputs.tag }}
+    steps:
+      - id: matchs-teams
+        env:
+          TYPE: matchs-teams
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+      - id: obt
+        env:
+          TYPE: obt
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+      - id: players-statistics
+        env:
+          TYPE: players-statistics
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+  triggers-players-stats-71:
+    strategy:
+      matrix:
+        cloud_run: [ players-stats-71, players-stats-39 ] # incluir obt
+    runs-on: ubuntu-latest
+    needs: tags_versions
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - id: "Auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Docker auth"
+        run: |-
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: "Scheduler matchs-teams 39"
+        run: |-
+          gcloud scheduler jobs update http matchs-teams-39 \
+                  --location ${{ env.REGION }} \
+                  --schedule="0 19 * * 1,5" \
+                  --uri="https://${{ env.REGION }}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/cartola-360814/jobs/${{ matrix.cloud_run }}:run" \
+                  --http-method POST
+
