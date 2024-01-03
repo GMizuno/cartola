@@ -37,7 +37,7 @@ jobs:
 
       - name: "Scheduler matchs-teams 39"
         run: |-
-          gcloud scheduler jobs update http ${{ matrix.cloud_run }} \
+          gcloud scheduler jobs create http ${{ matrix.cloud_run }} \
                   --location ${{ env.REGION }} \
                   --schedule="0 19 * * 1,5" \
                   --uri="https://${{ env.REGION }}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/cartola-360814/jobs/${{ matrix.cloud_run }}:run" \
@@ -70,7 +70,7 @@ jobs:
 
       - name: "Scheduler matchs-teams 39"
         run: |-
-          gcloud scheduler jobs update http ${{ matrix.cloud_run }} \
+          gcloud scheduler jobs create http ${{ matrix.cloud_run }} \
                   --location ${{ env.REGION }} \
                   --schedule="0 19 * * 6" \
                   --uri="https://${{ env.REGION }}-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/cartola-360814/jobs/${{ matrix.cloud_run }}:run" \
