@@ -6,9 +6,8 @@ on:
     types:
       - completed
 env:
-  PROJECT_ID: cartola-360814
   REGION: us-east1
-  GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python
+
 jobs:
   triggers-players-stats:
     strategy:
@@ -31,6 +30,10 @@ jobs:
       - name: "Docker auth"
         run: |-
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: "List Jobs"
+        run: |-
+          gcloud run jobs list
 
       - name: "Scheduler matchs-teams 39"
         run: |-
@@ -60,6 +63,10 @@ jobs:
       - name: "Docker auth"
         run: |-
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+
+      - name: "List Jobs"
+        run: |-
+          gcloud run jobs list
 
       - name: "Scheduler matchs-teams 39"
         run: |-
