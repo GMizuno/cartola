@@ -2,7 +2,7 @@ name: Deploy Cloud Run
 
 on:
   workflow_run:
-    workflows: [ Delete Cloud Run, Build and Push to Artifact Registry Geral ]
+    workflows: [ Delete Cloud Run ]
     types:
       - completed
 
