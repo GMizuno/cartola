@@ -32,4 +32,4 @@ jobs:
 
       - name: "Delete Cloud Run"
         run: |-
-          gcloud run jobs delete ${{ matrix.cloud_run }}  --region ${{ env.REGION }} --quiet 
+          gcloud run jobs delete ${{ matrix.cloud_run }} --region ${{ env.REGION }} --quiet 
