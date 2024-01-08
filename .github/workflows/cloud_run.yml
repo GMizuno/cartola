@@ -73,7 +73,7 @@ jobs:
 
       - id: "Deploy"
         run: |-
-          gcloud run jobs create obt \
+          gcloud run jobs create ${{ matrix.TYPE }}-${{ matrix.LEAGUE_ID }} \
             --image=${{ matrix.IMG }} \
             --service-account=${{ vars.SERVICE_ACCOUNT }} \
             --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},LEAGUE_ID=${{ matrix.LEAGUE_ID }},SEASON_YEAR=${{ matrix.SEASON_YEAR }} \
