@@ -59,9 +59,6 @@ jobs:
           gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
 
       - name: "Build image"
-        env:
-          TYPE: matchs-teams
-          MATCHS-TEAMS: ${{needs.tags_versions.outputs.tag_matchs-teams}}
         run: |-
           docker build . --file ./docker_images/${{ matrix.TYPE }}.Dockerfile \
                          --platform linux/amd64 --tag ${{ matrix.IMG }}
