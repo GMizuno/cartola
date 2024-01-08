@@ -43,6 +43,9 @@ jobs:
           - IMG: ${{ needs.tags_versions.outputs.tag_obt}}
             TYPE: obt
     steps:
+      - name: "Print variables"
+        run: |-
+          echo TYPE: ${{ matrix.TYPE }} IMG: ${{ matrix.IMG }}
       - name: "Checkout"
         uses: "actions/checkout@v3"
 
@@ -65,4 +68,4 @@ jobs:
 
       - name: "Push image"
         run: |-
-          docker push ${{  matrix.IMG }}
+          docker push ${{ matrix.IMG }}

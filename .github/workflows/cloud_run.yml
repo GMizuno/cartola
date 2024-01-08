@@ -13,6 +13,7 @@ env:
 
 jobs:
   tags_versions:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
