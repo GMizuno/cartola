@@ -13,7 +13,7 @@ env:
 
 jobs:
   tags_versions:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+#    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
@@ -39,23 +39,23 @@ jobs:
       max-parallel: 3
       matrix:
         include:
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
+            LEAGUE_ID: 71
+            SEASON_YEAR: 2024
+            TYPE: players-statistics
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
+            LEAGUE_ID: 39
+            SEASON_YEAR: 2023
+            TYPE: players-statistics
           - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
             LEAGUE_ID: 71
             SEASON_YEAR: 2024
-            TYPE: players-stats
+            TYPE: matchs-teams
           - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
             LEAGUE_ID: 39
             SEASON_YEAR: 2023
-            TYPE: players-stats
-          - IMG: ${{ needs.tags_versions.outputs.tag_matchs }}
-            LEAGUE_ID: 71
-            SEASON_YEAR: 2024
             TYPE: matchs-teams
-          - IMG: ${{ needs.tags_versions.outputs.tag_matchs}}
-            LEAGUE_ID: 39
-            SEASON_YEAR: 2023
-            TYPE: matchs-teams
-          - IMG: ${{ needs.tags_versions.outputs.tag_obt}}
+          - IMG: ${{ needs.tags_versions.outputs.tag_obt }}
             LEAGUE_ID: 39
             SEASON_YEAR: 2023
             TYPE: obt

@@ -37,7 +37,7 @@ jobs:
       matrix:
         include:
           - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
-            TYPE: players-stats
+            TYPE: players-statistics
           - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
             TYPE: matchs-teams
           - IMG: ${{ needs.tags_versions.outputs.tag_obt}}
