@@ -1,10 +1,9 @@
 name: Delete Cloud Run
 
 on:
-  workflow_run:
-    workflows: [ Build and Push to Artifact Registry Geral ]
-    types:
-      - completed
+  push:
+    branches: [ "main" ]
+
 
 env:
   PROJECT_ID: cartola-360814

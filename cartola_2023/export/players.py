@@ -1,4 +1,3 @@
-from datetime import date
 from typing import Optional
 
 import pendulum
@@ -23,8 +22,6 @@ def export_player_bronze(
     writer=None,
 ) -> list:
     partidas = Players(api_host_key, api_secert_key)
-    date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
-
     data = partidas.get_data(match_id=matches_id)
 
     file_name = FILE_NAME_JSON.format(
@@ -32,7 +29,7 @@ def export_player_bronze(
         BUCKET=Bucket.BRONZE,
         LEAGUE_ID=league_id,
         SEASON_YEAR=season_year,
-        DATE=date,
+        DATE=pendulum.now().strftime("%Y-%d-%m_%H:%M:%S"),
     )
     writer(storage, file_name, data).write()
 

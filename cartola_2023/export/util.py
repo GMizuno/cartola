@@ -44,7 +44,7 @@ def filter_by_date(
         dataframe.loc[
             (dataframe["reference_date"] >= date_from)
             & (dataframe["reference_date"] <= date_to)
-        ].partida_id.to_list()
+        ].match_id.to_list()
     )
     return list(result)
 
