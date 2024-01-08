@@ -80,7 +80,7 @@ urllib3 = "1.26.14"
 type = "git"
 url = "https://github.com/GMizuno/cartola_project"
 reference = "HEAD"
-resolved_reference = "c80e1edfe6d644520b8c8392efad5c6108667847"
+resolved_reference = "fedacfb90a8020e87f5a8f156783847ccc65855b"
 
 [[package]]
 name = "certifi"

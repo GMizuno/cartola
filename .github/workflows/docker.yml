@@ -12,7 +12,6 @@ env:
 jobs:
   tags_versions:
     runs-on: ubuntu-latest
-    # Map a step output to a job output
     outputs:
       tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
       tag_obt: ${{ steps.obt.outputs.tag }}

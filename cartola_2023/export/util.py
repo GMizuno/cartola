@@ -56,7 +56,7 @@ def create_obt_matches(cloudstorage: "CloudStorage", reader) -> pd.DataFrame:
 
     dataframe3 = reader(cloudstorage, "teams/silver/").read_all_files()
 
-    dataframe2 = dataframe2.astype({"fixture": "int64"})
+    dataframe2 = dataframe2.astype({"partida_id": "int64"})
     dataframe3 = dataframe3.astype({"team_id": "int64"})
 
     result = dataframe1.merge(
@@ -74,11 +74,11 @@ def create_obt_players(cloudstorage: "CloudStorage", reader) -> pd.DataFrame:
 
     dataframe2 = reader(cloudstorage, "matches/silver/").read_all_files()
 
-    dataframe1 = dataframe1.astype({"fixture": "int64"})
+    dataframe1 = dataframe1.astype({"match_id": "int64"})
     dataframe2 = dataframe2.astype({"match_id": "int64"})
 
     result = dataframe1.merge(
-        dataframe2, how="inner", right_on="match_id", left_on="fixture"
+        dataframe2, how="inner", right_on="match_id", left_on="match_id"
     )
 
     return result.drop_duplicates()
