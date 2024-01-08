@@ -36,9 +36,9 @@ jobs:
       max-parallel: 3
       matrix:
         include:
-          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
             TYPE: players-stats
-          - IMG: ${{ needs.tags_versions.outputs.tag_matchs }}
+          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
             TYPE: matchs-teams
           - IMG: ${{ needs.tags_versions.outputs.tag_obt}}
             TYPE: obt
@@ -46,6 +46,8 @@ jobs:
       - name: "Print variables"
         run: |-
           echo TYPE: ${{ matrix.TYPE }} IMG: ${{ matrix.IMG }}
+          
+
       - name: "Checkout"
         uses: "actions/checkout@v3"
 
