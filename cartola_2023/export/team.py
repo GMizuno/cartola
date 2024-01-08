@@ -25,7 +25,7 @@ def export_team_bronze(
     ids = get_all_ids(storage, league_id, season_year, reader)
     data = times.get_data(team_id=ids)
 
-    date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
+    date = pendulum.now().strftime("%Y")
     file_name = FILE_NAME_JSON.format(
         FOLDER=StorageFolder.TEAMS,
         BUCKET=Bucket.BRONZE,
@@ -47,7 +47,7 @@ def export_team_silver(
 ) -> None:
     data = TeamTransformer(file).transformation()
 
-    date = pendulum.now().strftime("%Y-%d-%m_%H:%M:%S")
+    date = pendulum.now().strftime("%Y")
     file_name = FILE_NAME_PARQUET.format(
         FOLDER=StorageFolder.TEAMS,
         BUCKET=Bucket.SILVER,

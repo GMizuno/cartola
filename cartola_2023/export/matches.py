@@ -26,7 +26,7 @@ def export_matches_bronze(
         BUCKET=Bucket.BRONZE,
         LEAGUE_ID=league_id,
         SEASON_YEAR=season_year,
-        DATE=pendulum.now().strftime("%Y-%d-%m"),
+        DATE=pendulum.now().strftime("%Y"),
     )
     writer(storage, file_name, data).write()
 
@@ -47,6 +47,6 @@ def export_matches_silver(
         BUCKET=Bucket.SILVER,
         LEAGUE_ID=league_id,
         SEASON_YEAR=season_year,
-        DATE=pendulum.now().strftime("%Y-%d-%m"),
+        DATE=pendulum.now().strftime("%Y"),
     )
     writer(storage, file_name, data).write()
