@@ -13,7 +13,7 @@ env:
 
 jobs:
   tags_versions:
-#    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
@@ -56,7 +56,7 @@ jobs:
             SEASON_YEAR: 2023
             TYPE: matchs-teams
           - IMG: ${{ needs.tags_versions.outputs.tag_obt }}
-            LEAGUE_ID: 39
+            LEAGUE_ID: geral
             SEASON_YEAR: 2023
             TYPE: obt
     steps:

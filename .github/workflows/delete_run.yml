@@ -16,7 +16,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     strategy:
       matrix:
-        cloud_run: [players-stats-71, players-stats-39, matchs-teams-71, matchs-teams-39, obt]
+        cloud_run: [players-statistics-71, players-statistics-39, matchs-teams-71, matchs-teams-39, obt]
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout"
