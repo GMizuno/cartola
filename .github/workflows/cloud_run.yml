@@ -13,7 +13,6 @@ env:
 
 jobs:
   tags_versions:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     outputs:
       tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
@@ -36,7 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ tags_versions ]
     strategy:
-      max-parallel: 3
       matrix:
         include:
           - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
@@ -56,7 +54,6 @@ jobs:
             SEASON_YEAR: 2023
             TYPE: matchs-teams
           - IMG: ${{ needs.tags_versions.outputs.tag_obt }}
-            LEAGUE_ID: geral
             SEASON_YEAR: 2023
             TYPE: obt
     steps:
