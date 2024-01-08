@@ -54,6 +54,7 @@ jobs:
             SEASON_YEAR: 2023
             TYPE: matchs-teams
           - IMG: ${{ needs.tags_versions.outputs.tag_obt }}
+            LEAGUE_ID: geral
             SEASON_YEAR: 2023
             TYPE: obt
     steps:
