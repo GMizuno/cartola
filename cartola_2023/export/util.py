@@ -56,12 +56,10 @@ def create_obt_matches(cloudstorage: "CloudStorage", reader) -> pd.DataFrame:
 
     dataframe3 = reader(cloudstorage, "teams/silver/").read_all_files()
 
-    dataframe2 = dataframe2.astype({"partida_id": "int64"})
+    dataframe2 = dataframe2.astype({"match_id": "int64"})
     dataframe3 = dataframe3.astype({"team_id": "int64"})
 
-    result = dataframe1.merge(
-        dataframe2, how="inner", right_on="fixture", left_on="match_id"
-    )
+    result = dataframe1.merge(dataframe2, how="inner", on=["match_id"])
     result = result.merge(dataframe3, how="inner", on=["team_id"])
 
     result = result.assign(home=result.id_team_home == result.team_id)
