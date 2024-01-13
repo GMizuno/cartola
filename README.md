@@ -1,4 +1,5 @@
-[![.github/workflows/artifact_partida.yml](https://github.com/GMizuno/cartola/actions/workflows/artifact_partida.yml/badge.svg)](https://github.com/GMizuno/cartola/actions/workflows/artifact_partida.yml)
+[![Build and Push to Artifact Registry Geral](https://github.com/GMizuno/cartola/actions/workflows/docker.yml/badge.svg)](https://github.com/GMizuno/cartola/actions/workflows/docker.yml)
+[![Deploy Cloud Run](https://github.com/GMizuno/cartola/actions/workflows/cloud_run.yml/badge.svg?branch=main)](https://github.com/GMizuno/cartola/actions/workflows/cloud_run.yml)
 
 ## Install git dependencies
 
