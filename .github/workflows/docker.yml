@@ -20,7 +20,7 @@ jobs:
     steps:
       - id: github-sha
         run: |-
-          echo "VERSION=$(echo $(date +'%Y%m%d') | sha256sum | awk '{print $1}')" >> $GITHUB_ENV
+          echo "VERSION=$(echo $(date +'%Y%m%d'))" >> $GITHUB_ENV
       - id: matchs-teams
         env:
           TYPE: matchs-teams
