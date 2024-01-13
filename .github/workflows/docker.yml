@@ -3,8 +3,7 @@ name: Build and Push to Artifact Registry Geral
 on:
   pull_request:
     branches:
-      - '!main'
-      - 'features-**'
+      - 'main'
 
 env:
   PROJECT_ID: cartola-360814
