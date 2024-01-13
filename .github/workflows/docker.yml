@@ -18,6 +18,9 @@ jobs:
       tag_obt: ${{ steps.obt.outputs.tag }}
       tag_players_statistics: ${{ steps.players-statistics.outputs.tag }}
     steps:
+      - id: github-sha
+        run: |-
+            echo ${{ github.sha }}
       - id: matchs-teams
         env:
           TYPE: matchs-teams
