@@ -40,26 +40,34 @@ jobs:
     strategy:
       matrix:
         include:
-          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
-            LEAGUE_ID: 71
-            SEASON_YEAR: 2024
-            TYPE: players-statistics
-          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
-            LEAGUE_ID: 39
-            SEASON_YEAR: 2023
-            TYPE: players-statistics
-          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
-            LEAGUE_ID: 71
-            SEASON_YEAR: 2024
-            TYPE: matchs-teams
-          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
-            LEAGUE_ID: 39
-            SEASON_YEAR: 2023
-            TYPE: matchs-teams
           - IMG: ${{ needs.tags_versions.outputs.tag_obt }}
             LEAGUE_ID: geral
             SEASON_YEAR: 2023
             TYPE: obt
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
+            LEAGUE_ID: 71
+            SEASON_YEAR: 2024
+            TYPE: players-statistics
+          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
+            LEAGUE_ID: 71
+            SEASON_YEAR: 2024
+            TYPE: matchs-teams
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
+            LEAGUE_ID: 39
+            SEASON_YEAR: 2023
+            TYPE: players-statistics
+          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
+            LEAGUE_ID: 39
+            SEASON_YEAR: 2023
+            TYPE: matchs-teams
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
+            LEAGUE_ID: 78
+            SEASON_YEAR: 2023
+            TYPE: players-statistics
+          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
+            LEAGUE_ID: 78
+            SEASON_YEAR: 2023
+            TYPE: matchs-teams
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v3"
