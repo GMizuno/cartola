@@ -1,0 +1,158 @@
+name: Build and Push to Artifact Registry Geral
+
+on:
+  push:
+    branches:
+      - 'main'
+
+env:
+  PROJECT_ID: cartola-360814
+  REGION: us-east1
+  GAR_LOCATION: us-east1-docker.pkg.dev/cartola-360814/cartola-project/cartola-python
+
+jobs:
+  tags_versions:
+    runs-on: ubuntu-latest
+    outputs:
+      tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
+      tag_obt: ${{ steps.obt.outputs.tag }}
+      tag_players_statistics: ${{ steps.players-statistics.outputs.tag }}
+    steps:
+      - id: github-sha
+        run: |-
+          echo "VERSION=$(echo $(date +'%Y%m%d'))" >> $GITHUB_ENV
+      - id: matchs-teams
+        env:
+          TYPE: matchs-teams
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
+      - id: obt
+        env:
+          TYPE: obt
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
+      - id: players-statistics
+        env:
+          TYPE: players-statistics
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
+  checkout:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - id: "Auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Docker auth"
+        run: |-
+          gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev --quiet
+  docker_registry:
+    runs-on: ubuntu-latest
+    needs: [ tags_versions ]
+    strategy:
+      max-parallel: 3
+      matrix:
+        include:
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
+            TYPE: players-statistics
+          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
+            TYPE: matchs-teams
+          - IMG: ${{ needs.tags_versions.outputs.tag_obt}}
+            TYPE: obt
+    steps:
+      - name: "Print variables"
+        run: |-
+          echo TYPE: ${{ matrix.TYPE }} IMG: ${{ matrix.IMG }}
+
+      - name: "Build image"
+        run: |-
+          docker build . --file ./docker_images/${{ matrix.TYPE }}.Dockerfile \
+                         --platform linux/amd64 --tag ${{ matrix.IMG }}
+
+      - name: "Push image"
+        run: |-
+          docker push ${{ matrix.IMG }}
+
+  delete_cloud_run:
+    strategy:
+      matrix:
+        cloud_run: [players-statistics-71, matchs-teams-71, players-statistics-39, matchs-teams-39, players-statistics-78, matchs-teams-78, obt-geral]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - id: "Auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - name: "Delete Cloud Run"
+        run: |-
+          gcloud run jobs delete ${{ matrix.cloud_run }} --region ${{ env.REGION }} --quiet 
+
+  cloud_run:
+    runs-on: ubuntu-latest
+    needs: [ tags_versions ]
+    strategy:
+      matrix:
+        include:
+          - IMG: ${{ needs.tags_versions.outputs.tag_obt }}
+            LEAGUE_ID: geral
+            SEASON_YEAR: 2023
+            TYPE: obt
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
+            LEAGUE_ID: 71
+            SEASON_YEAR: 2024
+            TYPE: players-statistics
+          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
+            LEAGUE_ID: 71
+            SEASON_YEAR: 2024
+            TYPE: matchs-teams
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
+            LEAGUE_ID: 39
+            SEASON_YEAR: 2023
+            TYPE: players-statistics
+          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
+            LEAGUE_ID: 39
+            SEASON_YEAR: 2023
+            TYPE: matchs-teams
+          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
+            LEAGUE_ID: 78
+            SEASON_YEAR: 2023
+            TYPE: players-statistics
+          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
+            LEAGUE_ID: 78
+            SEASON_YEAR: 2023
+            TYPE: matchs-teams
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - id: "Auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
+
+      - name: "Set up Cloud SDK"
+        uses: "google-github-actions/setup-gcloud@v1"
+
+      - id: "Deploy"
+        run: |-
+          gcloud run jobs create ${{ matrix.TYPE }}-${{ matrix.LEAGUE_ID }} \
+            --image=${{ matrix.IMG }} \
+            --service-account=${{ vars.SERVICE_ACCOUNT }} \
+            --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},LEAGUE_ID=${{ matrix.LEAGUE_ID }},SEASON_YEAR=${{ matrix.SEASON_YEAR }} \
+            --set-secrets=API_SECERT_KEY=Rapid_Api_API_SECERT_KEY:1 \
+            --region=${{ env.REGION }} \
+            --project=${{ env.PROJECT_ID }} \
+            --tasks=1 \
+            --max-retries=2 \
+            --parallelism=1
