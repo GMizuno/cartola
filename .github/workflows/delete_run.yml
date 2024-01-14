@@ -17,7 +17,7 @@ jobs:
       ${{ github.event.workflow_run.conclusion == 'success' && !contains(github.base_ref, 'league') }}
     strategy:
       matrix:
-        cloud_run: [players-statistics-71, matchs-teams-71, players-statistics-39, matchs-teams-39, players-statistics-78, matchs-teams-78, obt-geral]
+        cloud_run: [players-statistics-71, matchs-teams-71, players-statistics-39, matchs-teams-39, players-statistics-78, matchs-teams-78]
     runs-on: ubuntu-latest
     steps:
 

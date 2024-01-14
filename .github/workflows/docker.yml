@@ -1,7 +1,7 @@
 name: Build and Push to Artifact Registry Geral
 
 on:
-  pull_request:
+  push:
     branches:
       - 'main'
 
@@ -25,10 +25,6 @@ jobs:
         env:
           TYPE: matchs-teams
         run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
-      - id: obt
-        env:
-          TYPE: obt
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
       - id: players-statistics
         env:
           TYPE: players-statistics
@@ -44,13 +40,10 @@ jobs:
             TYPE: players-statistics
           - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
             TYPE: matchs-teams
-          - IMG: ${{ needs.tags_versions.outputs.tag_obt}}
-            TYPE: obt
     steps:
       - name: "Print variables"
         run: |-
-          echo TYPE: ${{ matrix.TYPE }} IMG: ${{ matrix.IMG }}
-          
+          echo TYPE: ${{ matrix.TYPE }} IMG: ${{ matrix.IMG }} 
 
       - name: "Checkout"
         uses: "actions/checkout@v3"
