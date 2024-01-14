@@ -69,8 +69,6 @@ jobs:
             SEASON_YEAR: 2023
             TYPE: matchs-teams
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
 
       - id: "Auth"
         uses: "google-github-actions/auth@v1"

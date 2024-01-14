@@ -20,8 +20,6 @@ jobs:
         cloud_run: [players-statistics-71, matchs-teams-71, players-statistics-39, matchs-teams-39, players-statistics-78, matchs-teams-78, obt-geral]
     runs-on: ubuntu-latest
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
 
       - id: "Auth"
         uses: "google-github-actions/auth@v1"
