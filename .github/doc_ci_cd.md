@@ -2,9 +2,13 @@
 
 Documentação com o passo a passo para incluir **uma nova liga** na esteira de CI/CD.
 
+OBS: Para subir uma nova liga utilize branches no seguinte formato **league*
 
-### Deploy Cloud Run
+### Console do Google Cloud
 
+Para incluir uma nova será necessario deletar so Jobs manualmente no console
+
+### Esteira de CI/CD
 
 [Manifesto](workflows%2Fcloud_run.yml) responsável por realizar o deploy dos Cloud Run. Para atualizar basta seguir o seguinte passo a passo
 
