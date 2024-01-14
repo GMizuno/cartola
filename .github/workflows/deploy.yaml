@@ -82,6 +82,7 @@ jobs:
       matrix:
         cloud_run: [players-statistics-71, matchs-teams-71, players-statistics-39, matchs-teams-39, players-statistics-78, matchs-teams-78, obt-geral]
     runs-on: ubuntu-latest
+    needs: [ docker_registry ]
     steps:
       - name: "Checkout"
         uses: "actions/checkout@v3"
@@ -100,7 +101,7 @@ jobs:
 
   cloud_run:
     runs-on: ubuntu-latest
-    needs: [ tags_versions ]
+    needs: [ delete_cloud_run, tags_versions ]
     strategy:
       matrix:
         include:
