@@ -64,6 +64,9 @@ jobs:
           - IMG: ${{ needs.tags_versions.outputs.tag_obt}}
             TYPE: obt
     steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
       - name: "Print variables"
         run: |-
           echo TYPE: ${{ matrix.TYPE }} IMG: ${{ matrix.IMG }}
@@ -84,17 +87,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ docker_registry ]
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-
-      - id: "Auth"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
-
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
-
       - name: "Delete Cloud Run"
         run: |-
           gcloud run jobs delete ${{ matrix.cloud_run }} --region ${{ env.REGION }} --quiet 
@@ -134,17 +126,6 @@ jobs:
             SEASON_YEAR: 2023
             TYPE: matchs-teams
     steps:
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
-
-      - id: "Auth"
-        uses: "google-github-actions/auth@v1"
-        with:
-          credentials_json: "${{ secrets.SERVICE_ACCOUNT_KEY }}"
-
-      - name: "Set up Cloud SDK"
-        uses: "google-github-actions/setup-gcloud@v1"
-
       - id: "Deploy"
         run: |-
           gcloud run jobs create ${{ matrix.TYPE }}-${{ matrix.LEAGUE_ID }} \
