@@ -20,19 +20,19 @@ jobs:
     steps:
       - id: github-sha
         run: |-
-            echo ${{ github.sha }}
+          echo "VERSION=$(echo $(date +'%Y%m%d'))" >> $GITHUB_ENV
       - id: matchs-teams
         env:
           TYPE: matchs-teams
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
       - id: obt
         env:
           TYPE: obt
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
       - id: players-statistics
         env:
           TYPE: players-statistics
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:${{ github.sha }}" >> $GITHUB_ENV >> $GITHUB_OUTPUT
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
   docker_registry:
     runs-on: ubuntu-latest
     needs: [ tags_versions ]
