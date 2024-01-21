@@ -47,12 +47,12 @@ jobs:
             TYPE: matchs-teams
             ORIGIN: brasil
           - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
-            LEAGUE_ID: 39,78
+            LEAGUE_ID: 39_78
             SEASON_YEAR: 2023
             TYPE: players-statistics
             ORIGIN: europa
           - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
-            LEAGUE_ID: 39,78
+            LEAGUE_ID: 39_78
             SEASON_YEAR: 2023
             TYPE: matchs-teams
             ORIGIN: europa

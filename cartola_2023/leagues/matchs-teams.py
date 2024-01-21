@@ -15,7 +15,7 @@ from cartola_2023.leagues import (
 leagues_id = list(
     map(
         lambda x: x.strip(),
-        league_id_list.split(","),
+        league_id_list.split("_"),
     )
 )
 
