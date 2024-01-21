@@ -26,10 +26,6 @@ jobs:
         env:
           TYPE: matchs-teams
         run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
-      - id: obt
-        env:
-          TYPE: obt
-        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
       - id: players-statistics
         env:
           TYPE: players-statistics
@@ -44,28 +40,23 @@ jobs:
             LEAGUE_ID: 71
             SEASON_YEAR: 2024
             TYPE: players-statistics
+            ORIGIN: brasil
           - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
             LEAGUE_ID: 71
             SEASON_YEAR: 2024
             TYPE: matchs-teams
+            ORIGIN: brasil
           - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
-            LEAGUE_ID: 39
+            LEAGUE_ID: 39,78
             SEASON_YEAR: 2023
             TYPE: players-statistics
+            ORIGIN: europa
           - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
-            LEAGUE_ID: 39
+            LEAGUE_ID: 39,78
             SEASON_YEAR: 2023
             TYPE: matchs-teams
-          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
-            LEAGUE_ID: 78
-            SEASON_YEAR: 2023
-            TYPE: players-statistics
-          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
-            LEAGUE_ID: 78
-            SEASON_YEAR: 2023
-            TYPE: matchs-teams
+            ORIGIN: europa
     steps:
-
       - id: "Auth"
         uses: "google-github-actions/auth@v1"
         with:
@@ -76,7 +67,7 @@ jobs:
 
       - id: "Deploy"
         run: |-
-          gcloud run jobs create ${{ matrix.TYPE }}-${{ matrix.LEAGUE_ID }} \
+          gcloud run jobs create ${{ matrix.TYPE }}-${{ matrix.ORIGIN }} \
             --image=${{ matrix.IMG }} \
             --service-account=${{ vars.SERVICE_ACCOUNT }} \
             --set-env-vars=API_HOST_KEY=${{ secrets.API_HOST_KEY }},LEAGUE_ID=${{ matrix.LEAGUE_ID }},SEASON_YEAR=${{ matrix.SEASON_YEAR }} \
