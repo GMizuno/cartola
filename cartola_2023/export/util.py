@@ -31,9 +31,10 @@ def filter_by_date(
     date_to: date,
     reader,
 ):
+    file_folder = f"matches/silver/league={league_id}/season={season_year}/"
     dataframe = reader(
         cloudstorage,
-        f"matches/silver/league={league_id}/season={season_year}/",
+        file_folder,
     ).read_all_files()
 
     dataframe["reference_date"] = pd.to_datetime(
