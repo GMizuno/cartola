@@ -22,7 +22,7 @@ date_from = date_to - timedelta(days=7)
 leagues_id = list(
     map(
         lambda x: x.strip(),
-        league_id_list.split(","),
+        league_id_list.split("_"),
     )
 )
 
