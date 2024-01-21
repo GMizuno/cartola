@@ -5,7 +5,7 @@ from cartola_2023.constant import ProjectId, BUCKET
 
 api_host_key = config("API_HOST_KEY")
 api_secert_key = config("API_SECERT_KEY")
-league_id = config("LEAGUE_ID")
+league_id_list = config("LEAGUE_ID")
 season_year = config("SEASON_YEAR")
 
 storage = factory_storage.get_storage("GCP")

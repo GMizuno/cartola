@@ -8,42 +8,49 @@ from cartola_2023.leagues import (
     parquet_reader,
     api_host_key,
     api_secert_key,
-    league_id,
+    league_id_list,
     season_year,
 )
 
-
-result_matches = export_matches_bronze(
-    api_host_key,
-    api_secert_key,
-    league_id,
-    season_year,
-    gcs,
-    json_writer,
+leagues_id = list(
+    map(
+        lambda x: x.strip(),
+        league_id_list.split(","),
+    )
 )
 
-export_matches_silver(
-    result_matches,
-    league_id,
-    season_year,
-    gcs,
-    parquet_writer,
-)
+for league_id in leagues_id:
+    result_matches = export_matches_bronze(
+        api_host_key,
+        api_secert_key,
+        league_id,
+        season_year,
+        gcs,
+        json_writer,
+    )
 
-result_teams = export_team_bronze(
-    api_host_key,
-    api_secert_key,
-    league_id,
-    season_year,
-    gcs,
-    json_writer,
-    parquet_reader,
-)
+    export_matches_silver(
+        result_matches,
+        league_id,
+        season_year,
+        gcs,
+        parquet_writer,
+    )
 
-export_team_silver(
-    result_teams,
-    league_id,
-    season_year,
-    gcs,
-    parquet_writer,
-)
+    result_teams = export_team_bronze(
+        api_host_key,
+        api_secert_key,
+        league_id,
+        season_year,
+        gcs,
+        json_writer,
+        parquet_reader,
+    )
+
+    export_team_silver(
+        result_teams,
+        league_id,
+        season_year,
+        gcs,
+        parquet_writer,
+    )

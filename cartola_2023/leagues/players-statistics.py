@@ -12,53 +12,60 @@ from cartola_2023.leagues import (
     parquet_writer,
     api_host_key,
     api_secert_key,
-    league_id,
+    league_id_list,
     season_year,
 )
 
 date_to = date.today()
 date_from = date_to - timedelta(days=7)
 
-matches_id = filter_by_date(
-    gcs, league_id, season_year, date_from, date_to, parquet_reader
+leagues_id = list(
+    map(
+        lambda x: x.strip(),
+        league_id_list.split(","),
+    )
 )
 
-
-if matches_id:
-    result_player = export_player_bronze(
-        api_host_key,
-        api_secert_key,
-        league_id,
-        season_year,
-        matches_id,
-        gcs,
-        parquet_writer,
+for league_id in leagues_id:
+    matches_id = filter_by_date(
+        gcs, league_id, season_year, date_from, date_to, parquet_reader
     )
 
-    export_player_silver(
-        result_player,
-        league_id,
-        season_year,
-        gcs,
-        parquet_writer,
-    )
+    if matches_id:
+        result_player = export_player_bronze(
+            api_host_key,
+            api_secert_key,
+            league_id,
+            season_year,
+            matches_id,
+            gcs,
+            parquet_writer,
+        )
 
-    result_statistics = export_statistics_bronze(
-        api_host_key,
-        api_secert_key,
-        league_id,
-        season_year,
-        matches_id,
-        gcs,
-        parquet_writer,
-    )
+        export_player_silver(
+            result_player,
+            league_id,
+            season_year,
+            gcs,
+            parquet_writer,
+        )
 
-    export_statistics_silver(
-        result_statistics,
-        league_id,
-        season_year,
-        gcs,
-        parquet_writer,
-    )
-else:
-    print("No matches found")
+        result_statistics = export_statistics_bronze(
+            api_host_key,
+            api_secert_key,
+            league_id,
+            season_year,
+            matches_id,
+            gcs,
+            parquet_writer,
+        )
+
+        export_statistics_silver(
+            result_statistics,
+            league_id,
+            season_year,
+            gcs,
+            parquet_writer,
+        )
+    else:
+        print("No matches found")
