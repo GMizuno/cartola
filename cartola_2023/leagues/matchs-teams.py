@@ -20,6 +20,7 @@ leagues_id = list(
 )
 
 for league_id in leagues_id:
+    print(f"Getting league {league_id}")
     result_matches = export_matches_bronze(
         api_host_key,
         api_secert_key,

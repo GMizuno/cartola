@@ -32,6 +32,7 @@ def filter_by_date(
     reader,
 ):
     file_folder = f"matches/silver/league={league_id}/season={season_year}/"
+    print(file_folder)
     dataframe = reader(
         cloudstorage,
         file_folder,
