@@ -35,7 +35,7 @@ files = [
 
 [[package]]
 name = "cartola_project"
-version = "0.1.dev127+ge572645"
+version = "0.1.dev129+g6d942f2"
 description = "Wrapper for collect data from some football tournament"
 optional = false
 python-versions = ">=3.8"
@@ -80,7 +80,7 @@ urllib3 = "1.26.14"
 type = "git"
 url = "https://github.com/GMizuno/cartola_project"
 reference = "HEAD"
-resolved_reference = "020f32a7b46959f432de702dd6f687a0f080814a"
+resolved_reference = "6d942f2a6e59d78f3d53a2d8c7e36e0871b5b75d"
 
 [[package]]
 name = "certifi"
