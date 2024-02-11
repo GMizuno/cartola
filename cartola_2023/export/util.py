@@ -39,7 +39,7 @@ def filter_by_date(
     ).read_all_files()
 
     dataframe["reference_date"] = pd.to_datetime(
-        dataframe["date"], format="mixed"
+        dataframe["reference_date"], format="%d-%m-%Y"
     ).dt.date
 
     result = set(
@@ -49,36 +49,3 @@ def filter_by_date(
         ].match_id.to_list()
     )
     return list(result)
-
-
-def create_obt_matches(cloudstorage: "CloudStorage", reader) -> pd.DataFrame:
-    dataframe1 = reader(cloudstorage, "matches/silver/").read_all_files()
-
-    dataframe2 = reader(cloudstorage, "statistics/silver/").read_all_files()
-
-    dataframe3 = reader(cloudstorage, "teams/silver/").read_all_files()
-
-    dataframe2 = dataframe2.astype({"match_id": "int64"})
-    dataframe3 = dataframe3.astype({"team_id": "int64"})
-
-    result = dataframe1.merge(dataframe2, how="inner", on=["match_id"])
-    result = result.merge(dataframe3, how="inner", on=["team_id"])
-
-    result = result.assign(home=result.id_team_home == result.team_id)
-
-    return result.drop_duplicates()
-
-
-def create_obt_players(cloudstorage: "CloudStorage", reader) -> pd.DataFrame:
-    dataframe1 = reader(cloudstorage, "players/silver/").read_all_files()
-
-    dataframe2 = reader(cloudstorage, "matches/silver/").read_all_files()
-
-    dataframe1 = dataframe1.astype({"match_id": "int64"})
-    dataframe2 = dataframe2.astype({"match_id": "int64"})
-
-    result = dataframe1.merge(
-        dataframe2, how="inner", right_on="match_id", left_on="match_id"
-    )
-
-    return result.drop_duplicates()
