@@ -1,3 +1,4 @@
+import time
 from datetime import date, timedelta
 
 from cartola_2023.export.players import export_player_bronze, export_player_silver
@@ -12,19 +13,13 @@ from cartola_2023.leagues import (
     parquet_writer,
     api_host_key,
     api_secert_key,
-    league_id_list,
+    leagues_id,
     season_year,
 )
 
 date_to = date.today()
 date_from = date_to - timedelta(days=7)
 
-leagues_id = list(
-    map(
-        lambda x: x.strip(),
-        league_id_list.split("_"),
-    )
-)
 
 for league_id in leagues_id:
     matches_id = filter_by_date(
@@ -49,6 +44,8 @@ for league_id in leagues_id:
             gcs,
             parquet_writer,
         )
+
+        time.sleep(45)
 
         result_statistics = export_statistics_bronze(
             api_host_key,

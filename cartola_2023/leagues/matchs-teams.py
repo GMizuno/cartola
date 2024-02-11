@@ -8,16 +8,10 @@ from cartola_2023.leagues import (
     parquet_reader,
     api_host_key,
     api_secert_key,
-    league_id_list,
+    leagues_id,
     season_year,
 )
 
-leagues_id = list(
-    map(
-        lambda x: x.strip(),
-        league_id_list.split("_"),
-    )
-)
 
 for league_id in leagues_id:
     print(f"Getting league {league_id}")
