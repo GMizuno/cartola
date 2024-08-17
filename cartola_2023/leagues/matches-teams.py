@@ -2,7 +2,10 @@ from cartola_2023.export.matches import export_matches_bronze, export_matches_si
 
 from cartola_2023.export.team import export_team_bronze, export_team_silver
 from cartola_2023.leagues import (
-    gcs,
+    gcs_matches_json,
+    gcs_matches_parquet,
+    gcs_teams_json,
+    gcs_teams_parquet,
     json_writer,
     parquet_writer,
     parquet_reader,
@@ -20,7 +23,7 @@ for league_id in leagues_id:
         api_secert_key,
         league_id,
         season_year,
-        gcs,
+        gcs_matches_json,
         json_writer,
     )
 
@@ -28,7 +31,7 @@ for league_id in leagues_id:
         result_matches,
         league_id,
         season_year,
-        gcs,
+        gcs_matches_parquet,
         parquet_writer,
     )
 
@@ -37,7 +40,7 @@ for league_id in leagues_id:
         api_secert_key,
         league_id,
         season_year,
-        gcs,
+        gcs_teams_json,
         json_writer,
         parquet_reader,
     )
@@ -46,6 +49,6 @@ for league_id in leagues_id:
         result_teams,
         league_id,
         season_year,
-        gcs,
+        gcs_teams_parquet,
         parquet_writer,
     )

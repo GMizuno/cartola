@@ -8,7 +8,11 @@ from cartola_2023.export.statistics import (
 )
 from cartola_2023.export.util import filter_by_date
 from cartola_2023.leagues import (
-    gcs,
+    gcs_matches_parquet,
+    gcs_players_json,
+    gcs_players_parquet,
+    gcs_statistics_json,
+    gcs_statistics_parquet,
     parquet_reader,
     parquet_writer,
     api_host_key,
@@ -23,7 +27,7 @@ date_from = date_to - timedelta(days=7)
 
 for league_id in leagues_id:
     matches_id = filter_by_date(
-        gcs, league_id, season_year, date_from, date_to, parquet_reader
+        gcs_matches_parquet, league_id, season_year, date_from, date_to, parquet_reader
     )
 
     if matches_id:
@@ -33,7 +37,7 @@ for league_id in leagues_id:
             league_id,
             season_year,
             matches_id,
-            gcs,
+            gcs_players_json,
             parquet_writer,
         )
 
@@ -41,7 +45,7 @@ for league_id in leagues_id:
             result_player,
             league_id,
             season_year,
-            gcs,
+            gcs_players_parquet,
             parquet_writer,
         )
 
@@ -53,7 +57,7 @@ for league_id in leagues_id:
             league_id,
             season_year,
             matches_id,
-            gcs,
+            gcs_statistics_json,
             parquet_writer,
         )
 
@@ -61,7 +65,7 @@ for league_id in leagues_id:
             result_statistics,
             league_id,
             season_year,
-            gcs,
+            gcs_statistics_parquet,
             parquet_writer,
         )
     else:
