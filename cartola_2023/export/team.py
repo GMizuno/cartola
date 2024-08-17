@@ -8,7 +8,6 @@ from cartola_2023.constant import (
     FILE_NAME_PARQUET,
 )
 from cartola_project.transformations import TeamTransformer
-from cartola_2023.export.util import get_all_ids
 
 
 def export_team_bronze(
@@ -16,14 +15,12 @@ def export_team_bronze(
     api_secert_key: str,
     league_id: str,
     season_year: str,
+    teams_id: list,
     storage,
     writer,
-    reader,
 ) -> list[dict]:
     times = Teams(api_host_key, api_secert_key)
-
-    ids = get_all_ids(storage, league_id, season_year, reader)
-    data = times.get_data(team_id=ids)
+    data = times.get_data(team_id=teams_id)
 
     date = pendulum.now().strftime("%Y")
     file_name = FILE_NAME_JSON.format(
