@@ -19,12 +19,3 @@ __ALL_ = [
     "FILE_NAME_JSON",
     "FILE_NAME_PARQUET",
 ]
-
-
-FILE_NAME_JSON.format(
-    FOLDER=StorageFolder.MATCHES,
-    BUCKET=Bucket.BRONZE,
-    LEAGUE_ID=1,
-    SEASON_YEAR=3,
-    DATE=4,
-)
