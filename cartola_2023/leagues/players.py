@@ -1,18 +1,12 @@
-import time
 from datetime import date, timedelta
 
 from cartola_2023.export.players import export_player_bronze, export_player_silver
-from cartola_2023.export.statistics import (
-    export_statistics_bronze,
-    export_statistics_silver,
-)
+
 from cartola_2023.export.util import filter_by_date
 from cartola_2023.leagues import (
     gcs_matches_parquet,
     gcs_players_json,
     gcs_players_parquet,
-    gcs_statistics_json,
-    gcs_statistics_parquet,
     parquet_reader,
     parquet_writer,
     api_host_key,
@@ -46,26 +40,6 @@ for league_id in leagues_id:
             league_id,
             season_year,
             gcs_players_parquet,
-            parquet_writer,
-        )
-
-        time.sleep(45)
-
-        result_statistics = export_statistics_bronze(
-            api_host_key,
-            api_secert_key,
-            league_id,
-            season_year,
-            matches_id,
-            gcs_statistics_json,
-            parquet_writer,
-        )
-
-        export_statistics_silver(
-            result_statistics,
-            league_id,
-            season_year,
-            gcs_statistics_parquet,
             parquet_writer,
         )
     else:

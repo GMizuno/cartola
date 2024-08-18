@@ -14,20 +14,29 @@ jobs:
   tags_versions:
     runs-on: ubuntu-latest
     outputs:
-      tag_matchs-teams: ${{ steps.matchs-teams.outputs.tag }}
-      tag_obt: ${{ steps.obt.outputs.tag }}
-      tag_players_statistics: ${{ steps.players-statistics.outputs.tag }}
+      tag_teams: ${{ steps.teams.outputs.tag }}
+      tag_matchs: ${{ steps.matchs.outputs.tag }}
+      tag_players: ${{ steps.players.outputs.tag }}
+      tag_statistics: ${{ steps.statistics.outputs.tag }}
     steps:
       - id: github-sha
         run: |-
           echo "VERSION=$(echo $(date +'%Y%m%d'))" >> $GITHUB_ENV
-      - id: matchs-teams
+      - id: matchs
         env:
-          TYPE: matchs-teams
+          TYPE: matchs
         run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
-      - id: players-statistics
+      - id: teams
         env:
-          TYPE: players-statistics
+          TYPE: teams
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
+      - id: players
+        env:
+          TYPE: players
+        run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
+      - id: statistics
+        env:
+          TYPE: statistics
         run: echo "tag=${{ env.GAR_LOCATION }}-${{ env.TYPE }}:$VERSION" >> $GITHUB_OUTPUT
   docker_registry:
     runs-on: ubuntu-latest
@@ -36,10 +45,14 @@ jobs:
       max-parallel: 3
       matrix:
         include:
-          - IMG: ${{ needs.tags_versions.outputs.tag_players_statistics }}
-            TYPE: players-statistics
-          - IMG: ${{ needs.tags_versions.outputs.tag_matchs-teams }}
-            TYPE: matchs-teams
+          - IMG: ${{ needs.tags_versions.outputs.tag_teams }}
+            TYPE: teams
+          - IMG: ${{ needs.tags_versions.outputs.tag_matchs }}
+            TYPE: matchs
+          - IMG: ${{ needs.tags_versions.outputs.tag_players }}
+            TYPE: players
+          - IMG: ${{ needs.tags_versions.outputs.tag_statistics }}
+            TYPE: statistics
     steps:
       - name: "Print variables"
         run: |-
