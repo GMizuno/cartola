@@ -92,7 +92,7 @@ jobs:
 #        working-directory: terraform
     steps:
       - name: teste
-        run: ls .
+        run: echo $(ls)
 #      - name: Setup Terraform
 #        run: hashicorp/setup-terraform@v1
 #      - name: Terraform Init
