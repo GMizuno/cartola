@@ -101,6 +101,8 @@ jobs:
         uses: hashicorp/setup-terraform@v3
       - name: Terraform Init
         run: terraform init
+      - name: Print
+        run: ls .
       - name: Terraform Plan
         run: terraform plan -out teste -input=false
       - name: Terraform apply
