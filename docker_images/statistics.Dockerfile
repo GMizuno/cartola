@@ -18,4 +18,4 @@ COPY cartola_2023 ./cartola_2023
 RUN poetry config virtualenvs.in-project true
 RUN poetry install
 
-ENTRYPOINT ["poetry", "run", "python", "-m", "cartola_2023.leagues.players-statistics"]
+ENTRYPOINT ["poetry", "run", "python", "-m", "cartola_2023.leagues.statistics"]
