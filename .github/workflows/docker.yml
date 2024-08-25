@@ -91,7 +91,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: ./terraform
+        working-directory: ../terraform
     steps:
       - name: Setup Terraform
         run: hashicorp/setup-terraform@v1
