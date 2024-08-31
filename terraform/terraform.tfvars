@@ -6,7 +6,7 @@ bucket_trigger_statistics = "statistics_parquet"
 
 
 // Teams
-teams_cron            = "0 8 * * 1,3,5"
+teams_cron            = "0 8 * * 4"
 origin_teams          = "teams"
 cloud_run_teams_image = "cartola-python-teams"
 function_name_teams   = "teams"
@@ -27,7 +27,7 @@ function_name_players   = "players"
 
 // Matches
 cloud_run_matches_image = "cartola-python-matchs"
-macthes_cron            = "0 8 * * 1,3,5"
+macthes_cron            = "30 8 * * 4"
 origin_matches          = "matches"
 function_name_matches   = "matches"
 
