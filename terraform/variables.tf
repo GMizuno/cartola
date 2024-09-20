@@ -6,8 +6,10 @@ variable "region" {
   type    = string
   default = "us-east1"
 }
-variable "league_id" {type=string}
-variable "seasson_year" {type=string}
+variable "league_id_europe" {type=string}
+variable "seasson_year_europe" {type=string}
+variable "league_id_brazil" {type=string}
+variable "seasson_year_brazil" {type=string}
 variable "service_account" {
   type = string
   default = "functions-cartola@cartola-360814.iam.gserviceaccount.com"

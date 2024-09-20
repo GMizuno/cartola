@@ -54,8 +54,8 @@ module "cloud_run_job_matches_br" {
  cloud_run_name = var.cloud_run_matches_name_brazil
  image_name = var.cloud_run_matches_image
  cron = var.macthes_cron
- league_id = var.league_id
- season_year = var.seasson_year
+ league_id = var.league_id_brazil
+ season_year = var.seasson_year_brazil
 }
 
 module "cloud_run_job_teams_br" {
@@ -65,8 +65,8 @@ module "cloud_run_job_teams_br" {
  cloud_run_name = var.cloud_run_teams_name_brazil
  image_name = var.cloud_run_teams_image
  cron = var.teams_cron
- league_id = var.league_id
- season_year = var.seasson_year
+ league_id = var.league_id_brazil
+ season_year = var.seasson_year_brazil
 }
 
 module "cloud_run_job_statistics_br" {
@@ -76,8 +76,8 @@ module "cloud_run_job_statistics_br" {
  cloud_run_name = var.cloud_run_statistics_name_brazil
  image_name = var.cloud_run_statistics_image
  cron = var.statistics_cron
- league_id = var.league_id
- season_year = var.seasson_year
+ league_id = var.league_id_brazil
+ season_year = var.seasson_year_brazil
 }
 
 module "cloud_run_job_players_br" {
@@ -87,8 +87,8 @@ module "cloud_run_job_players_br" {
  cloud_run_name = var.cloud_run_players_name_brazil
  image_name = var.cloud_run_players_image
  cron = var.players_cron
- league_id = var.league_id
- season_year = var.seasson_year
+ league_id = var.league_id_brazil
+ season_year = var.seasson_year_brazil
 }
 
 
@@ -100,8 +100,8 @@ module "cloud_run_job_matches_europe" {
  cloud_run_name = var.cloud_run_matches_name_europe
  image_name = var.cloud_run_matches_image
  cron = var.macthes_cron
- league_id = var.league_id
- season_year = var.seasson_year
+ league_id = var.league_id_europe
+ season_year = var.seasson_year_europe
 }
 
 module "cloud_run_job_teams_europe" {
@@ -111,8 +111,8 @@ module "cloud_run_job_teams_europe" {
  cloud_run_name = var.cloud_run_teams_name_europe
  image_name = var.cloud_run_teams_image
  cron = var.teams_cron
- league_id = var.league_id
- season_year = var.seasson_year
+ league_id = var.league_id_europe
+ season_year = var.seasson_year_europe
 }
 
 module "cloud_run_job_statistics_europe" {
@@ -122,8 +122,8 @@ module "cloud_run_job_statistics_europe" {
  cloud_run_name = var.cloud_run_statistics_name_europe
  image_name = var.cloud_run_statistics_image
  cron = var.statistics_cron
- league_id = var.league_id
- season_year = var.seasson_year
+ league_id = var.league_id_europe
+ season_year = var.seasson_year_europe
 }
 
 module "cloud_run_job_players_europe" {
@@ -133,6 +133,6 @@ module "cloud_run_job_players_europe" {
  cloud_run_name = var.cloud_run_players_name_europe
  image_name = var.cloud_run_players_image
  cron = var.players_cron
- league_id = var.league_id
- season_year = var.seasson_year
+ league_id = var.league_id_europe
+ season_year = var.seasson_year_europe
 }

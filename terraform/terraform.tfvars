@@ -10,8 +10,10 @@ teams_cron            = "0 9 * * 4"
 origin_teams          = "teams"
 cloud_run_teams_image = "cartola-python-teams"
 function_name_teams   = "teams"
-league_id             = 71
-seasson_year          = 2024
+league_id_europe             = 71
+league_id_brazil             = 39
+seasson_year_europe          = 2024
+seasson_year_brazil          = 2024
 
 // Teams - EUROPE
 cloud_run_teams_name_europe = "teams-europe"
