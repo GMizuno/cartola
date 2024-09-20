@@ -31,7 +31,7 @@ module "cloud_functions_statistics" {
  region = var.region
  service_account = var.service_account
  function_name = var.function_name_statistics
- origin = var.origin_players
+ origin = var.origin_statistics
  bucket_trigger = var.bucket_trigger_statistics
 }
 
