@@ -11,7 +11,7 @@ COPY pyproject.toml poetry.lock ./
 
 RUN touch README.md
 
-RUN poetry install --no-root
+RUN poetry install --no-root && rm -rf $POETRY_CACHE_DIR
 
 COPY cartola_2023 ./cartola_2023
 
