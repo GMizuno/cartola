@@ -17,17 +17,16 @@ from cartola_2023.leagues import (
     season_year,
 )
 
-date_to = date.fromisoformat("2024-05-27")
-date_from = date.fromisoformat("2023-08-18")
+date_to = date.fromisoformat("2024-08-30")
+date_from = date.fromisoformat("2024-01-01")
 
-_matches_id = filter_by_date(
+matches_id = filter_by_date(
     gcs_matches_parquet, leagues_id[0], season_year, date_from, date_to, parquet_reader
 )
 
 # matches_id = _matches_id[:100]
 # matches_id = _matches_id[100:200]
-matches_id = _matches_id[200:300]
-# matches_id = _matches_id[300:308]
+# matches_id = _matches_id[200:239]
 
 for league_id in leagues_id:
     if matches_id:
