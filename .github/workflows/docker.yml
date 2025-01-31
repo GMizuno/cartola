@@ -75,7 +75,7 @@ jobs:
 
       - name: "Build image"
         run: |-
-          DOCKER_BUILDKIT=1 docker build --target=runtime . --file ./docker_images/${{ matrix.TYPE }}.Dockerfile \
+          DOCKER_BUILDKIT=1 docker build . --file ./docker_images/${{ matrix.TYPE }}.Dockerfile \
                          --platform linux/amd64 --tag ${{ matrix.IMG }} 
 
       - name: "Push image"
