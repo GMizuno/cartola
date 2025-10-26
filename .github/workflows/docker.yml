@@ -30,4 +30,4 @@ jobs:
       - name: Terraform Init
         run: terraform init
       - name: Terraform Destroy
-        run: terraform apply -destroy
+        run: terraform destroy -auto-approve
